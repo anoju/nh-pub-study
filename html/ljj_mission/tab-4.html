@@ -64,6 +64,27 @@
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
 
+      let tab_list = document.querySelectorAll('.tab-list');
+      let tab_line = document.querySelectorAll('.tab-line');
+      let tab = document.querySelector('.tab-list .tab');
+
+      for (let k = 0; k < tab_line.length; k++) {
+        tab_line[k].style.width = `${tab.offsetWidth}px`;
+        tab_line[k].style.left = `2.4rem`;
+        tab_line[k].style.transition = '.5s';
+        tab_line[k].style.transform = `translateX(${tab.offsetWidth * 0}px)`;
+        // active를 가지고 있는 .tab의 인덱스 값을 구하고 싶음..
+      }
+
+      for (let i = 0; i < tab_list.length; i++) {
+        tab_list[i].addEventListener('click', function (e) {
+          for (let j = 0; j < this.children.length; j++) {
+            this.children[j].classList.remove('active');
+          }
+          e.target.parentElement.classList.add('active');
+        });
+      }
+
       // 힌트 제이쿼리함수:
       // addClass(), removeClass(), toggleClass(), hasClass()
       // parent(), closest(), siblings(), find(), children()
