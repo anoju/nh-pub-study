@@ -41,35 +41,41 @@
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // jqyery
-      // $('.tab-line-menu a').click(function (e) {
-      //   e.preventDefault();
-      //   const $href = $(this).attr('href');
-      //   $(this).parent().addClass('active').siblings().removeClass('active');
-      //   $($href).addClass('active').siblings('.tab-panel').removeClass('active');
-      // });
-
-      // javascript
-      const $tabBtn = document.querySelectorAll('.tab-line-menu a');
-      function $tabReset() {
-        const $tabLi = document.querySelectorAll('.tab-line-menu .tab');
-        $tabLi.forEach((li) => {
-          li.classList.remove('active');
-        });
-        const $panel = document.querySelectorAll('.tab-panel');
-        $panel.forEach((panel) => {
-          panel.classList.remove('active');
+      function jqTab() {
+        $('.tab-line-menu a').click(function (e) {
+          e.preventDefault();
+          const $href = $(this).attr('href');
+          $(this).parent().addClass('active').siblings().removeClass('active');
+          $($href).addClass('active').siblings('.tab-panel').removeClass('active');
         });
       }
-      $tabBtn.forEach((tab) => {
-        const $btn = tab;
-        $btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const $href = $btn.getAttribute('href');
-          $tabReset();
-          $btn.parentNode.classList.add('active');
-          document.querySelector($href).classList.add('active');
+      // jqTab();
+
+      // javascript
+      function jsTab() {
+        const $tabBtn = document.querySelectorAll('.tab-line-menu a');
+        function $tabReset() {
+          const $tabLi = document.querySelectorAll('.tab-line-menu .tab');
+          $tabLi.forEach((li) => {
+            li.classList.remove('active');
+          });
+          const $panel = document.querySelectorAll('.tab-panel');
+          $panel.forEach((panel) => {
+            panel.classList.remove('active');
+          });
+        }
+        $tabBtn.forEach((tab) => {
+          const $btn = tab;
+          $btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const $href = $btn.getAttribute('href');
+            $tabReset();
+            $btn.parentNode.classList.add('active');
+            document.querySelector($href).classList.add('active');
+          });
         });
-      });
+      }
+      jsTab();
     </script>
   </body>
 </html>
