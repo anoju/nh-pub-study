@@ -17,13 +17,19 @@
             <div class="tab-inner">
               <i class="tab-line" aria-hidden="true"></i>
               <ul class="tab-list">
-                <li class="tab active"><a href="#">텝메뉴1</a></li>
-                <li class="tab"><a href="#">텝메뉴2</a></li>
-                <li class="tab"><a href="#">텝메뉴3</a></li>
-                <li class="tab"><a href="#">텝메뉴4</a></li>
+                <li class="tab active"><a href="#tab1">텝메뉴1</a></li>
+                <li class="tab"><a href="#tab2">텝메뉴2</a></li>
+                <li class="tab"><a href="#tab3">텝메뉴3</a></li>
+                <li class="tab"><a href="#tab4">텝메뉴4</a></li>
               </ul>
             </div>
           </div>
+          <br />
+          <div id="tab1" class="tab-panel active"><h2>탭내용입니다. 111</h2></div>
+          <div id="tab2" class="tab-panel"><h2>탭내용입니다. 222</h2></div>
+          <div id="tab3" class="tab-panel"><h2>탭내용입니다. 333</h2></div>
+          <div id="tab4" class="tab-panel"><h2>탭내용입니다. 444</h2></div>
+          <br />
           <br />
           <p>탭메뉴(.tab-line-menu)를 클릭하여 해당메뉴를 활성화 시켜보세요.</p>
           <p>.tab 영역에 .active 클래스로 활성화 할 수 있습니다.</p>
@@ -36,12 +42,6 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-
-      // jqyery
-      $('.tab-line-menu a').click(function (e) {
-        e.preventDefault();
-        $(this).parent().addClass('active').siblings().removeClass('active');
-      });
     </script>
   </body>
 </html>
