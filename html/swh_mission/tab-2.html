@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="../../js/lib/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
@@ -67,32 +67,32 @@
       const btns_2 = document.querySelectorAll('.tab-list.two .tab');
       const btns_3 = document.querySelectorAll('.tab-list.three .tab');
 
-      for( let i=0; i<btns_1.length; i++){
-        btns_1[i].addEventListener('click',function(){
-          for( j=0; j<btns_1.length; j++){
+      for (let i = 0; i < btns_1.length; i++) {
+        btns_1[i].addEventListener('click', function () {
+          for (j = 0; j < btns_1.length; j++) {
             btns_1[j].classList.remove('active');
-        }
-        btns_1[i].classList.add('active');
+          }
+          btns_1[i].classList.add('active');
         });
-      }; 
+      }
 
-      for( let a=0; a<btns_2.length; a++){
-        btns_2[a].addEventListener('click',function(){
-          for( k=0; k<btns_2.length; k++){
+      for (let a = 0; a < btns_2.length; a++) {
+        btns_2[a].addEventListener('click', function () {
+          for (k = 0; k < btns_2.length; k++) {
             btns_2[k].classList.remove('active');
-        }
-        btns_2[a].classList.add('active');
+          }
+          btns_2[a].classList.add('active');
         });
-      };    
+      }
 
-      for( let b=0; b<btns_3.length; b++){
-        btns_3[b].addEventListener('click',function(){
-          for( g=0; g<btns_3.length; g++){
+      for (let b = 0; b < btns_3.length; b++) {
+        btns_3[b].addEventListener('click', function () {
+          for (g = 0; g < btns_3.length; g++) {
             btns_3[g].classList.remove('active');
-        }
-        btns_3[b].classList.add('active');
+          }
+          btns_3[b].classList.add('active');
         });
-      }     
+      }
       // 힌트 제이쿼리함수:
       // addClass(), removeClass(), toggleClass(), hasClass()
       // parent(), closest(), siblings(), find(), children()

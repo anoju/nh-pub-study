@@ -24,7 +24,7 @@
               </ul>
             </div>
           </div>
-          <br/>
+          <br />
           <p>탭메뉴(.tab-line-menu)를 클릭하여 해당메뉴를 활성화 시켜보세요.</p>
           <p>.tab 영역에 .active 클래스로 활성화 할 수 있습니다.</p>
           <p><u>하나의 탭메뉴만 활성화 되어야합니다.</u></p>
@@ -32,24 +32,21 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="../../js/lib/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
 
       const btns = document.querySelectorAll('.tab-list .tab');
 
-      for( let i=0; i<btns.length; i++){
-        btns[i].addEventListener('click',function(){
-          for( j=0; j<btns.length; j++){
-            
-          btns[j].classList.remove('active');
-        }
+      for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function () {
+          for (j = 0; j < btns.length; j++) {
+            btns[j].classList.remove('active');
+          }
           btns[i].classList.add('active');
-
         });
-      }     
-      
+      }
 
       // 힌트 제이쿼리함수:
       // addClass(), removeClass(), toggleClass(), hasClass()
