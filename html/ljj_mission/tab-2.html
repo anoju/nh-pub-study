@@ -62,33 +62,39 @@
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
 
-      let tab1 = document.querySelectorAll('.tab-list.one .tab');
-      let tab2 = document.querySelectorAll('.tab-list.two .tab');
-      let tab3 = document.querySelectorAll('.tab-list.three .tab');
+      let tab1 = document.querySelectorAll('.tab-list.one .tab a');
+      let tab2 = document.querySelectorAll('.tab-list.two .tab a');
+      let tab3 = document.querySelectorAll('.tab-list.three .tab a');
       tab1.forEach((el, index) => {
         el.addEventListener('click', (e) => {
+          // a태그 기능차단
+          e.preventDefault();
           for (let i = 0; i < tab1.length; i++) {
-            tab1[i].classList.remove('active');
+            tab1[i].parentElement.classList.remove('active');
           }
-          tab1[index].classList.add('active');
+          tab1[index].parentElement.classList.add('active');
         });
       });
 
       tab2.forEach((el, index) => {
         el.addEventListener('click', (e) => {
+          // a태그 기능차단
+          e.preventDefault();
           for (let i = 0; i < tab2.length; i++) {
-            tab2[i].classList.remove('active');
+            tab2[i].parentElement.classList.remove('active');
           }
-          tab2[index].classList.add('active');
+          tab2[index].parentElement.classList.add('active');
         });
       });
 
       tab3.forEach((el, index) => {
         el.addEventListener('click', (e) => {
+          // a태그 기능차단
+          e.preventDefault();
           for (let i = 0; i < tab3.length; i++) {
-            tab3[i].classList.remove('active');
+            tab3[i].parentElement.classList.remove('active');
           }
-          tab3[index].classList.add('active');
+          tab3[index].parentElement.classList.add('active');
         });
       });
 
