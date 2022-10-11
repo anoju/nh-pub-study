@@ -38,13 +38,15 @@
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
 
       //스크립트
-      let tab = document.querySelectorAll('.tab-list .tab');
+      let tab = document.querySelectorAll('.tab-list .tab a');
       tab.forEach((el, index) => {
         el.addEventListener('click', (e) => {
+          // a태그 기능차단
+          e.preventDefault();
           for (let i = 0; i < tab.length; i++) {
-            tab[i].classList.remove('active');
+            tab[i].parentElement.classList.remove('active');
           }
-          tab[index].classList.add('active');
+          tab[index].parentElement.classList.add('active');
         });
       });
 
