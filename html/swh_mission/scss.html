@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <link href="../../css/swh.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-body">
+        <div class="section">
+          <div class="test-wrap">
+            <div class="pop">
+              <div class="navwrap">
+                <i class="xi-close"></i>
+                <div>
+                  <i class="xi-maker"></i>
+                  <h3>본점 을지로센터 브랜치</h3>
+                </div>
+                <div class="branchtext">
+                  <a href="#">
+                    <span>MY브랜치가 처음이신가요?</span>
+                  </a>
+                </div>
+              </div>
+              <div class="mainwrap">
+                <ul class="mainBtn">
+                  <li class="liafter">
+                    <a href="#">
+                      <span>대출</span>
+                      <i class="xi-angle-down"></i>
+                    </a>
+                    <ul class="maintext">
+                      <li>대출신청하기</li>
+                      <li>진행조회 및 서류제출(촬영)</li>
+                      <li>대출금받기</li>
+                    </ul>
+                  </li>
+                  <li class="liafter">
+                    <a href="#">
+                      <span>신용동의</span>
+                      <i class="xi-angle-down"></i>
+                    </a>
+                    <ul class="maintext">
+                      <li>개인대출용 신용동의</li>
+                      <li>사업자대출용 신용동의</li>
+                    </ul>
+                  </li>
+                  <li>개인정보 이용 동의</li>
+                  <li class="liafter">
+                    <a href="#">
+                      <span>분실/변경</span>
+                      <i class="xi-angle-down"></i>
+                    </a>
+                    <ul class="maintext">
+                      <li>내 정보변경</li>
+                      <li>동장/인감 분실</li>
+                      <li>통장 비밀번호 재등록</li>
+                    </ul>
+                  </li>
+                  <li>비대면계좌개설</li>
+                  <li>신용카드</li>
+                </ul>
+              </div>
+              <button id="wisdsd" onclick="new_window();">sdsadasdasd</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script>
+      // 스크립트 작성이 여기에
+
+      $('.mainBtn > li.liafter').on('click', function (e) {
+        e.preventDefault();
+
+        var target = $(this);
+        var index = target.index();
+        $('li.liafter .maintext').stop().slideUp(300);
+        target.children('li.liafter > ul.maintext').stop().slideToggle(300);
+      });
+    </script>
+  </body>
+</html>

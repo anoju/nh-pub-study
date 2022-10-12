@@ -1,4 +1,5 @@
 node_modules/
 npm-debug.log
+.DS_store
 # .vscode/* 
 # git rm -r --cached .vscode/
