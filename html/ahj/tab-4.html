@@ -121,6 +121,7 @@
       }
       // jqTabReady();
       // jqTab();
+      // $(window).resize(jqTabReady);
 
       // javascript
       function jsTabLine(active, line) {
@@ -174,6 +175,7 @@
       }
       jsTabReady();
       jsTab();
+      window.addEventListener('resize', jsTabReady);
     </script>
   </body>
 </html>
