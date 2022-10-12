@@ -31,7 +31,7 @@
           <div id="tab1-4" class="tab-panel"><h2>탭내용입니다. 444</h2></div>
           <br />
           <br />
-          <div class="tab-line-menu ui-tab">
+          <div class="tab-line-menu outer ui-tab">
             <div class="tab-inner">
               <i class="tab-line" aria-hidden="true"></i>
               <ul class="tab-list">
@@ -39,6 +39,9 @@
                 <li class="tab active"><a href="#tab2-2">텝메뉴2</a></li>
                 <li class="tab"><a href="#tab2-3">텝메뉴3</a></li>
                 <li class="tab"><a href="#tab2-4">텝메뉴4</a></li>
+                <li class="tab"><a href="#tab2-5">텝메뉴5</a></li>
+                <li class="tab"><a href="#tab2-6">텝메뉴6</a></li>
+                <li class="tab"><a href="#tab2-7">텝메뉴7</a></li>
               </ul>
             </div>
           </div>
@@ -47,6 +50,9 @@
           <div id="tab2-2" class="tab-panel active"><h2>탭내용입니다. 222</h2></div>
           <div id="tab2-3" class="tab-panel"><h2>탭내용입니다. 333</h2></div>
           <div id="tab2-4" class="tab-panel"><h2>탭내용입니다. 444</h2></div>
+          <div id="tab2-5" class="tab-panel"><h2>탭내용입니다. 555</h2></div>
+          <div id="tab2-6" class="tab-panel"><h2>탭내용입니다. 666</h2></div>
+          <div id="tab2-7" class="tab-panel"><h2>탭내용입니다. 777</h2></div>
           <br />
           <br />
           <div class="tab-box-menu ui-tab">
@@ -80,11 +86,11 @@
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // jqyery
-      function jqTabLine(active, line) {
-        const $active = active;
-        const $activeLeft = active.position().left;
-        const $activeWidth = active.outerWidth();
-        const $line = line;
+      function jqTabLine(wrap) {
+        const $active = $(wrap).find('.tab.active');
+        const $activeLeft = $active.position().left;
+        const $activeWidth = $active.outerWidth();
+        const $line = $(wrap).find('.tab-line');
         $line.stop().animate(
           {
             left: $activeLeft,
@@ -107,16 +113,12 @@
               $($btnHref).removeClass('active');
             });
           $($href).addClass('active');
-
-          const $line = $(this).closest('.ui-tab').find('.tab-line');
-          jqTabLine($(this).parent(), $line);
+          jqTabLine($(this).closest('.ui-tab'));
         });
       }
       function jqTabReady() {
         $('.ui-tab').each(function () {
-          const $active = $(this).find('.tab.active');
-          const $line = $(this).find('.tab-line');
-          jqTabLine($active, $line);
+          jqTabLine(this);
         });
       }
       // jqTabReady();
@@ -124,11 +126,11 @@
       // $(window).resize(jqTabReady);
 
       // javascript
-      function jsTabLine(active, line) {
-        const $active = active;
-        const $activeLeft = active.offsetLeft;
-        const $activeWidth = active.offsetWidth;
-        const $line = line;
+      function jsTabLine(wrap) {
+        const $active = wrap.querySelector('.tab.active');
+        const $activeLeft = $active.offsetLeft;
+        const $activeWidth = $active.offsetWidth;
+        const $line = wrap.querySelector('.tab-line');
         $line.style.transition = 'left 0.5s ease, width 0.5s ease';
         $line.style.left = $activeLeft + 'px';
         $line.style.width = $activeWidth + 'px';
@@ -158,19 +160,14 @@
             $tabReset($closest);
             $btn.parentNode.classList.add('active');
             document.querySelector($href).classList.add('active');
-
-            const $line = $closest.querySelector('.tab-line');
-            jsTabLine($btn.parentNode, $line);
+            jsTabLine($closest);
           });
         });
       }
       function jsTabReady() {
         const $tab = document.querySelectorAll('.ui-tab');
         $tab.forEach((tab) => {
-          tab.qu;
-          const $active = tab.querySelector('.tab.active');
-          const $line = tab.querySelector('.tab-line');
-          jsTabLine($active, $line);
+          jsTabLine(tab);
         });
       }
       jsTabReady();
