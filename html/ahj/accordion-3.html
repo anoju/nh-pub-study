@@ -72,7 +72,7 @@
           <ul class="folding-list ui-folding _toggle">
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn"><div>11제목제목 제목제목 제목제목 제목제목</div></a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -84,7 +84,7 @@
             </li>
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn"><div>22제목제목 제목제목 제목제목 제목제목</div></a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -101,7 +101,7 @@
             </li>
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn"><div>33제목제목 제목제목 제목제목 제목제목</div></a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -134,6 +134,8 @@
     </div>
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../js/ahj.js"></script>
     <script>
       // jquery
       function jqAccordion() {
@@ -158,7 +160,7 @@
           }
         });
       }
-      jqAccordion();
+      // jqAccordion();
 
       function makeList() {
         const $html = `<li>
@@ -215,6 +217,42 @@
         $('#list').append($html);
       }
       // makeList();
+
+      // javascript
+      function jsAccordion() {
+        const $btn = document.querySelectorAll('.ui-folding .folding-btn');
+
+        function siblingsHide(siblings) {
+          siblings.forEach((item) => {
+            const $itemBtn = item.querySelector('.folding-btn');
+            const $itemPanel = item.querySelector('.folding-panel');
+            $itemBtn.classList.remove('open');
+            slideUp($itemPanel, 300);
+          });
+        }
+
+        $btn.forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const $target = e.target;
+            const $wrap = $target.closest('.ui-folding');
+            const $li = $target.closest('li');
+            const $panel = $li.querySelector('.folding-panel');
+            if ($target.classList.contains('open')) {
+              $target.classList.remove('open');
+              slideUp($panel, 300);
+            } else {
+              $target.classList.add('open');
+              slideDown($panel, 300);
+              if ($wrap.classList.contains('_toggle')) {
+                const $siblings = getSiblings($li);
+                siblingsHide($siblings);
+              }
+            }
+          });
+        });
+      }
+      jsAccordion();
     </script>
   </body>
 </html>

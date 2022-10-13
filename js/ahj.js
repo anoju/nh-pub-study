@@ -1,23 +1,54 @@
 function getStyle(element, attr) {
-  // const rtnVal = parseInt(window.getComputedStyle(element, null).getPropertyValue(attr), 10);
-  // return rtnVal;
   let strValue = '';
   if (document.defaultView && document.defaultView.getComputedStyle) {
     strValue = document.defaultView.getComputedStyle(element, '').getPropertyValue(attr);
   } else if (element.currentStyle) {
-    attr = attr.replace(/\-(\w)/g, (strMatch, p1) => p1.toUpperCase()); // eslint-disable-line no-useless-escape
+    attr = attr.replace(/\-(\w)/g, (strMatch, p1) => p1.toUpperCase());
     strValue = element.currentStyle[attr];
   }
   return strValue;
 }
 
-let slideAnime;
-function slideUp(elem, speed, fn) {
-  if (speed === undefined) speed = 500;
-  if (slideAnime) {
+function getSiblings(e) {
+  // for collecting siblings
+  const siblings = [];
+  // if no parent, return no sibling
+  if (!e.parentNode) {
+    return siblings;
+  }
+  // first child of the parent node
+  let sibling = e.parentNode.firstChild;
+  // collecting siblings
+  while (sibling) {
+    if (sibling.nodeType === 1 && sibling !== e) {
+      siblings.push(sibling);
+    }
+    sibling = sibling.nextSibling;
+  }
+  return siblings;
+}
+
+const slideAry = [];
+function slideAryChk(elem) {
+  const _aryIdx = slideAry.findIndex((item) => item.el === elem);
+  if (_aryIdx > -1) {
+    slideAnime = slideAry[_aryIdx].fn;
     slideAnime.pause();
     slideAnime.remove(elem);
   }
+}
+function slideAryAdd(elem, func) {
+  const _aryIdx = slideAry.findIndex((item) => item.el === elem);
+  if (_aryIdx > -1) {
+    slideAry[_aryIdx].fn = func;
+  } else {
+    slideAry.push({ el: elem, fn: func });
+  }
+}
+function slideUp(elem, speed, fn) {
+  if (getStyle(elem, 'display') === 'none') return;
+  if (speed === undefined) speed = 500;
+  slideAryChk(elem);
   elem.style.overflow = 'hidden';
   if (!elem.classList.contains('_slide-ing')) elem.classList.add('_slide-ing');
   slideAnime = anime({
@@ -38,14 +69,13 @@ function slideUp(elem, speed, fn) {
       }
     }
   });
+  slideAryAdd(elem, slideAnime);
 }
 
 function slideDown(elem, speed, fn) {
   if (speed === undefined) speed = 500;
-  if (slideAnime) {
-    slideAnime.pause();
-    slideAnime.remove(elem);
-  }
+  let slideAnime = elem.dataset.slideAnime;
+  slideAryChk(elem);
   let isHide = false;
   if (getStyle(elem, 'display') === 'none') {
     elem.style.display = 'block';
@@ -103,4 +133,5 @@ function slideDown(elem, speed, fn) {
       }
     }
   });
+  slideAryAdd(elem, slideAnime);
 }
