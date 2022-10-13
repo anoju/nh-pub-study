@@ -43,14 +43,14 @@
         $('.folding-btn').click(function (e) {
           e.preventDefault();
           $(this).toggleClass('open');
-          $('.folding-panel').stop().slideToggle(300);
+          $(this).closest('.folding-list').find('.folding-panel').stop().slideToggle(300);
 
           // if ($(this).hasClass('open')) {
           //   $(this).removeClass('open');
-          //   $('.folding-panel').stop().slideUp(300);
+          //   $(this).closest('.folding-list').find('.folding-panel').stop().slideUp(300);
           // } else {
           //   $(this).addClass('open');
-          //   $('.folding-panel').stop().slideDown(300);
+          //   $(this).closest('.folding-list').find('.folding-panel').stop().slideDown(300);
           // }
         });
       }
