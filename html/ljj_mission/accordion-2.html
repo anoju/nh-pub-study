@@ -140,9 +140,9 @@
           e.preventDefault();
           $(this).toggleClass('open');
           if ($(this).hasClass('open')) {
-            $('.folding-panel').stop().slideDown();
+            $(this).closest('.folding-head').siblings().stop().slideDown();
           } else {
-            $('.folding-panel').stop().slideUp();
+            $(this).closest('.folding-head').siblings().stop().slideUp();
           }
         });
       }
