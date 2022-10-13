@@ -11,12 +11,16 @@ function getStyle(element, attr) {
   return strValue;
 }
 
+let slideAnime;
 function slideUp(elem, speed, fn) {
-  if (getStyle(elem, 'display') === 'none' || elem.classList.contains('slideAction')) return;
-  elem.classList.add('slideAction');
   if (speed === undefined) speed = 500;
   elem.style.overflow = 'hidden';
-  anime({
+  if (slideAnime) {
+    slideAnime.pause();
+    slideAnime.remove(elem);
+  }
+  elem.classList.add('_slide');
+  slideAnime = anime({
     targets: elem,
     height: 0,
     marginTop: 0,
@@ -27,7 +31,7 @@ function slideUp(elem, speed, fn) {
     easing: 'easeInOutQuad',
     complete: () => {
       elem.removeAttribute('style');
-      elem.classList.remove('slideAction');
+      elem.classList.remove('_slide');
       elem.style.display = 'none';
       if (fn !== undefined && typeof fn === 'function') {
         fn();
@@ -37,29 +41,52 @@ function slideUp(elem, speed, fn) {
 }
 
 function slideDown(elem, speed, fn) {
-  if (getStyle(elem, 'display') !== 'none' || elem.classList.contains('slideAction')) return;
-  elem.classList.add('slideAction');
   if (speed === undefined) speed = 500;
-  elem.removeAttribute('style');
   let isHide = false;
   if (getStyle(elem, 'display') === 'none') {
     elem.style.display = 'block';
     isHide = true;
   }
-  const elHeight = elem.offsetHeight;
-  const elMgT = parseInt(getStyle(elem, 'margin-top'), 10);
-  const elMgB = parseInt(getStyle(elem, 'margin-bottom'), 10);
-  const elPdT = parseInt(getStyle(elem, 'padding-top'), 10);
-  const elPdB = parseInt(getStyle(elem, 'padding-bottom'), 10);
+  let elHeight = elem.offsetHeight;
+  let elMgT = parseInt(getStyle(elem, 'margin-top'), 10);
+  let elMgB = parseInt(getStyle(elem, 'margin-bottom'), 10);
+  let elPdT = parseInt(getStyle(elem, 'padding-top'), 10);
+  let elPdB = parseInt(getStyle(elem, 'padding-bottom'), 10);
+  if (isHide) {
+    elem.style.overflow = 'hidden';
+    elem.style.height = '0px';
+    elem.style.marginTop = '0px';
+    elem.style.marginBottom = '0px';
+    elem.style.paddingTop = '0px';
+    elem.style.paddingBottom = '0px';
+  } else if (elem.classList.contains('_slide')) {
+    const _elHeight = elHeight;
+    const _elMgT = elMgT;
+    const _elMgB = elMgB;
+    const _elPdT = elPdT;
+    const _elPdB = elPdB;
+    elem.removeAttribute('style');
+    elem.style.display = 'block';
+    elem.style.overflow = 'hidden';
+    elHeight = elem.offsetHeight;
+    elMgT = parseInt(getStyle(elem, 'margin-top'), 10);
+    elMgB = parseInt(getStyle(elem, 'margin-bottom'), 10);
+    elPdT = parseInt(getStyle(elem, 'padding-top'), 10);
+    elPdB = parseInt(getStyle(elem, 'padding-bottom'), 10);
 
-  elem.style.overflow = 'hidden';
-  elem.style.height = '0px';
-  elem.style.marginTop = '0px';
-  elem.style.marginBottom = '0px';
-  elem.style.paddingTop = '0px';
-  elem.style.paddingBottom = '0px';
+    elem.style.height = _elHeight + 'px';
+    elem.style.marginTop = _elMgT + 'px';
+    elem.style.marginBottom = _elMgB + 'px';
+    elem.style.paddingTop = _elPdT + 'px';
+    elem.style.paddingBottom = _elPdB + 'px';
+  }
 
-  anime({
+  if (slideAnime) {
+    slideAnime.pause();
+    slideAnime.remove(elem);
+  }
+  elem.classList.add('_slide');
+  slideAnime = anime({
     targets: elem,
     height: elHeight,
     marginTop: elMgT,
@@ -69,9 +96,9 @@ function slideDown(elem, speed, fn) {
     duration: speed,
     easing: 'easeInOutQuad',
     complete: () => {
+      elem.classList.remove('_slide');
       elem.removeAttribute('style');
-      elem.classList.remove('slideAction');
-      if (isHide) elem.style.display = 'block';
+      elem.style.display = 'block';
       if (fn !== undefined && typeof fn === 'function') {
         fn();
       }

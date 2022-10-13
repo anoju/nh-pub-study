@@ -60,22 +60,15 @@
       function jsAccordion() {
         const $btn = document.querySelector('.folding-btn');
         const $panel = document.querySelector('.folding-panel');
-        let $sliding = false;
         $btn.addEventListener('click', (e) => {
           e.preventDefault();
-          if ($sliding) return;
-          $sliding = true;
           const $target = e.target;
           if ($target.classList.contains('open')) {
             $target.classList.remove('open');
-            slideUp($panel, 300, () => {
-              $sliding = false;
-            });
+            slideUp($panel, 300);
           } else {
             $target.classList.add('open');
-            slideDown($panel, 300, () => {
-              $sliding = false;
-            });
+            slideDown($panel, 300);
           }
         });
       }
