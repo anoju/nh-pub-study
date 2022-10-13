@@ -14,12 +14,12 @@ function getStyle(element, attr) {
 let slideAnime;
 function slideUp(elem, speed, fn) {
   if (speed === undefined) speed = 500;
-  elem.style.overflow = 'hidden';
   if (slideAnime) {
     slideAnime.pause();
     slideAnime.remove(elem);
   }
-  elem.classList.add('_slide');
+  elem.style.overflow = 'hidden';
+  if (!elem.classList.contains('_slide-ing')) elem.classList.add('_slide-ing');
   slideAnime = anime({
     targets: elem,
     height: 0,
@@ -31,7 +31,7 @@ function slideUp(elem, speed, fn) {
     easing: 'easeInOutQuad',
     complete: () => {
       elem.removeAttribute('style');
-      elem.classList.remove('_slide');
+      elem.classList.remove('_slide-ing');
       elem.style.display = 'none';
       if (fn !== undefined && typeof fn === 'function') {
         fn();
@@ -42,6 +42,10 @@ function slideUp(elem, speed, fn) {
 
 function slideDown(elem, speed, fn) {
   if (speed === undefined) speed = 500;
+  if (slideAnime) {
+    slideAnime.pause();
+    slideAnime.remove(elem);
+  }
   let isHide = false;
   if (getStyle(elem, 'display') === 'none') {
     elem.style.display = 'block';
@@ -59,7 +63,7 @@ function slideDown(elem, speed, fn) {
     elem.style.marginBottom = '0px';
     elem.style.paddingTop = '0px';
     elem.style.paddingBottom = '0px';
-  } else if (elem.classList.contains('_slide')) {
+  } else if (elem.classList.contains('_slide-ing')) {
     const _elHeight = elHeight;
     const _elMgT = elMgT;
     const _elMgB = elMgB;
@@ -80,12 +84,7 @@ function slideDown(elem, speed, fn) {
     elem.style.paddingTop = _elPdT + 'px';
     elem.style.paddingBottom = _elPdB + 'px';
   }
-
-  if (slideAnime) {
-    slideAnime.pause();
-    slideAnime.remove(elem);
-  }
-  elem.classList.add('_slide');
+  if (!elem.classList.contains('_slide-ing')) elem.classList.add('_slide-ing');
   slideAnime = anime({
     targets: elem,
     height: elHeight,
@@ -96,7 +95,7 @@ function slideDown(elem, speed, fn) {
     duration: speed,
     easing: 'easeInOutQuad',
     complete: () => {
-      elem.classList.remove('_slide');
+      elem.classList.remove('_slide-ing');
       elem.removeAttribute('style');
       elem.style.display = 'block';
       if (fn !== undefined && typeof fn === 'function') {
