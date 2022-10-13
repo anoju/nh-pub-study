@@ -37,6 +37,16 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+
+      $('.folding-btn').click(function (e) {
+        e.preventDefault();
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+          $('.folding-panel').stop().slideDown();
+        } else {
+          $('.folding-panel').stop().slideUp();
+        }
+      });
     </script>
   </body>
 </html>
