@@ -35,6 +35,8 @@
     </div>
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../js/ahj.js"></script>
     <script>
       // jquery
       function jqAccordion() {
@@ -52,7 +54,32 @@
           // }
         });
       }
-      jqAccordion();
+      // jqAccordion();
+
+      // javascript
+      function jsAccordion() {
+        const $btn = document.querySelector('.folding-btn');
+        const $panel = document.querySelector('.folding-panel');
+        let $sliding = false;
+        $btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if ($sliding) return;
+          $sliding = true;
+          const $target = e.target;
+          if ($target.classList.contains('open')) {
+            $target.classList.remove('open');
+            slideUp($panel, 300, () => {
+              $sliding = false;
+            });
+          } else {
+            $target.classList.add('open');
+            slideDown($panel, 300, () => {
+              $sliding = false;
+            });
+          }
+        });
+      }
+      jsAccordion();
     </script>
   </body>
 </html>
