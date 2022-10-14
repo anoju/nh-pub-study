@@ -146,13 +146,14 @@
               $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
             }
           } else {
-            $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
+            // $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
             if ($(this).hasClass('open')) {
-              $('.folding-panel').stop().slideUp();
-              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
-            } else {
-              $('.folding-panel').stop().slideDown();
+              $(this).removeClass('open');
               $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            } else {
+              $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
+              $(this).closest('li').siblings().find('.folding-panel').stop().slideUp();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
             }
           }
         });
