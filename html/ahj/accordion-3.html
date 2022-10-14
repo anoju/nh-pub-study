@@ -16,7 +16,7 @@
           <ul class="folding-list ui-folding" id="list">
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -28,7 +28,7 @@
             </li>
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -45,7 +45,7 @@
             </li>
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -72,7 +72,7 @@
           <ul class="folding-list ui-folding _toggle">
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>11제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -84,7 +84,7 @@
             </li>
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>22제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -101,7 +101,7 @@
             </li>
             <li>
               <div class="folding-head">
-                <a href="#" class="folding-btn"><div>33제목제목 제목제목 제목제목 제목제목</div></a>
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
                 내용<br />
@@ -165,7 +165,7 @@
       function makeList() {
         const $html = `<li>
           <div class="folding-head">
-            <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+            <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
           </div>
           <div class="folding-panel">
             내용<br />
@@ -177,7 +177,7 @@
         </li>
         <li>
           <div class="folding-head">
-            <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+            <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
           </div>
           <div class="folding-panel">
             내용<br />
@@ -194,7 +194,7 @@
         </li>
         <li>
           <div class="folding-head">
-            <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
+            <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
           </div>
           <div class="folding-panel">
             내용<br />
@@ -235,6 +235,7 @@
           btn.addEventListener('click', (e) => {
             e.preventDefault();
             const $target = e.target;
+            console.log($target);
             const $wrap = $target.closest('.ui-folding');
             const $li = $target.closest('li');
             const $panel = $li.querySelector('.folding-panel');
