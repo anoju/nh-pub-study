@@ -139,19 +139,19 @@
         $('.folding-btn').click(function (e) {
           e.preventDefault();
           if ($(this).closest('.folding-list').hasClass('_on')) {
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
+          } else {
             $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
             if ($(this).hasClass('open')) {
               $('.folding-panel').stop().slideUp();
               $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
             } else {
               $('.folding-panel').stop().slideDown();
-              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
-            }
-          } else {
-            $(this).toggleClass('open');
-            if ($(this).hasClass('open')) {
-              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
-            } else {
               $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
             }
           }
