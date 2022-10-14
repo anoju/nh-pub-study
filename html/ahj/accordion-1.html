@@ -42,16 +42,16 @@
       function jqAccordion() {
         $('.folding-btn').click(function (e) {
           e.preventDefault();
-          $(this).toggleClass('open');
-          $(this).closest('.folding-list').find('.folding-panel').stop().slideToggle(300);
+          // $(this).toggleClass('open');
+          // $(this).closest('.folding-list').find('.folding-panel').stop().slideToggle(300);
 
-          // if ($(this).hasClass('open')) {
-          //   $(this).removeClass('open');
-          //   $(this).closest('.folding-list').find('.folding-panel').stop().slideUp(300);
-          // } else {
-          //   $(this).addClass('open');
-          //   $(this).closest('.folding-list').find('.folding-panel').stop().slideDown(300);
-          // }
+          if ($(this).hasClass('open')) {
+            $(this).removeClass('open');
+            $(this).closest('.folding-list').find('.folding-panel').stop().slideUp(300);
+          } else {
+            $(this).addClass('open');
+            $(this).closest('.folding-list').find('.folding-panel').stop().slideDown(300);
+          }
         });
       }
       // jqAccordion();
