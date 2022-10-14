@@ -69,7 +69,7 @@
           <br />
           <br />
           <h2 class="gd__h2">토글 되게</h2>
-          <ul class="folding-list">
+          <ul class="folding-list _on">
             <li>
               <div class="folding-head">
                 <a href="#" class="folding-btn"><div>제목제목 제목제목 제목제목 제목제목</div></a>
@@ -138,11 +138,22 @@
       function jqAccordion() {
         $('.folding-btn').click(function (e) {
           e.preventDefault();
-          $(this).toggleClass('open');
-          if ($(this).hasClass('open')) {
-            $(this).closest('.folding-head').siblings().stop().slideDown();
+          if ($(this).closest('.folding-list').hasClass('_on')) {
+            $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
+            if ($(this).hasClass('open')) {
+              $('.folding-panel').stop().slideUp();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $('.folding-panel').stop().slideDown();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
           } else {
-            $(this).closest('.folding-head').siblings().stop().slideUp();
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
           }
         });
       }
