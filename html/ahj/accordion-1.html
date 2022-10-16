@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-body">
+        <div class="section">
+          <h1 class="gd__h1">아코디언</h1>
+
+          <dl class="folding-list">
+            <dt class="folding-head">
+              <a href="#" class="folding-btn"><strong>공지사항</strong></a>
+            </dt>
+            <dd class="folding-panel">
+              <h2>내용입니다.</h2>
+              <h2>내용입니다.</h2>
+              <h2>내용입니다.</h2>
+              <h2>내용입니다.</h2>
+            </dd>
+          </dl>
+          <br />
+          <br />
+          <p>아코디언에서 '.folding-btn' 클릭하여 숨겨진 컨텐츠(.folding-panel)를 보여주세요</p>
+          <p>.folding-btn에 open 클래스로 꺽새 방향이 바뀝니다.</p>
+          <p>.folding-btn에 open 클래스로 꺽새 방향이 바뀝니다.</p>
+          <p><u>한번에 연속으로 다중 클릭 시를 고려해서 만들어주세요</u></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../js/ahj.js"></script>
+    <script>
+      // jquery
+      function jqAccordion() {
+        $('.folding-btn').click(function (e) {
+          e.preventDefault();
+          // $(this).toggleClass('open');
+          // $(this).closest('.folding-list').find('.folding-panel').stop().slideToggle(300);
+
+          if ($(this).hasClass('open')) {
+            $(this).removeClass('open');
+            $(this).closest('.folding-list').find('.folding-panel').stop().slideUp(300);
+          } else {
+            $(this).addClass('open');
+            $(this).closest('.folding-list').find('.folding-panel').stop().slideDown(300);
+          }
+        });
+      }
+      // jqAccordion();
+
+      // javascript
+      function jsAccordion() {
+        const $btn = document.querySelector('.folding-btn');
+        const $panel = document.querySelector('.folding-panel');
+        $btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const $target = e.target;
+          if ($target.classList.contains('open')) {
+            $target.classList.remove('open');
+            slideUp($panel, 300);
+          } else {
+            $target.classList.add('open');
+            slideDown($panel, 300);
+          }
+        });
+      }
+      jsAccordion();
+    </script>
+  </body>
+</html>

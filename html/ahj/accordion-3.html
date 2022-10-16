@@ -13,7 +13,7 @@
         <div class="section">
           <h1 class="gd__h1">아코디언</h1>
           <h2 class="gd__h2">토글 없이</h2>
-          <ul class="folding-list">
+          <ul class="folding-list ui-folding" id="list">
             <li>
               <div class="folding-head">
                 <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
@@ -69,7 +69,7 @@
           <br />
           <br />
           <h2 class="gd__h2">토글 되게</h2>
-          <ul class="folding-list">
+          <ul class="folding-list ui-folding _toggle">
             <li>
               <div class="folding-head">
                 <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
@@ -127,26 +127,132 @@
           <p>아코디언에서 '.folding-btn' 클릭하여 숨겨진 컨텐츠(.folding-panel)를 보여주세요</p>
           <p>.folding-btn에 open 클래스로 꺽새 방향이 바뀝니다.</p>
           <p>한번에 연속으로 다중 클릭 시를 고려해서 만들어주세요</p>
-          <p><u>상당 리스트는 해당리스트안에 숨김 컨텐츠들 상관없이 클릭하면 클릭한 영역의 숨김 컨텐츠를 제어하고, 하단 리스트는 클릭한 영역의 숨김 컨텐츠는 보여줄때는 보여지는 다른 숨김컨텐츠가 있다면 숨겨주세요</u></p>
+          <p>상당 리스트는 해당리스트안에 숨김 컨텐츠들 상관없이 클릭하면 클릭한 영역의 숨김 컨텐츠를 제어하고, 하단 리스트는 클릭한 영역의 숨김 컨텐츠는 보여줄때는 보여지는 다른 숨김컨텐츠가 있다면 숨겨주세요</p>
+          <p><u>위내용을 하나의 함수로 리스트 모두를 컨트롤 하세요. 추가 클래스나 다른 속성을 보여해도 무관합니다.</u></p>
         </div>
       </div>
     </div>
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../js/ahj.js"></script>
     <script>
       // jquery
       function jqAccordion() {
-        $('.folding-btn').click(function (e) {
+        $('.ui-folding .folding-btn').click(function (e) {
           e.preventDefault();
-          $(this).toggleClass('open');
-          if ($(this).hasClass('open')) {
-            $('.folding-panel').stop().slideDown();
+          const $this = $(this);
+          const $wrap = $this.closest('.ui-folding');
+          const $li = $this.closest('li');
+          const $panel = $li.find('.folding-panel');
+
+          if ($this.hasClass('open')) {
+            $this.removeClass('open');
+            $panel.stop().slideUp(300);
           } else {
-            $('.folding-panel').stop().slideUp();
+            $this.addClass('open');
+            $panel.stop().slideDown(300);
+            if ($wrap.hasClass('_toggle')) {
+              const $siblings = $li.siblings();
+              $siblings.find('.folding-btn').removeClass('open');
+              $siblings.find('.folding-panel').stop().slideUp(300);
+            }
           }
         });
       }
-      jqAccordion();
+      // jqAccordion();
+
+      function makeList() {
+        const $html = `<li>
+          <div class="folding-head">
+            <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
+          </div>
+          <div class="folding-panel">
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+          </div>
+        </li>
+        <li>
+          <div class="folding-head">
+            <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
+          </div>
+          <div class="folding-panel">
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+          </div>
+        </li>
+        <li>
+          <div class="folding-head">
+            <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
+          </div>
+          <div class="folding-panel">
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+            내용<br />
+          </div>
+        </li>`;
+        $('#list').append($html);
+      }
+      // makeList();
+
+      // javascript
+      function jsAccordion() {
+        const $btn = document.querySelectorAll('.ui-folding .folding-btn');
+
+        function siblingsHide(siblings) {
+          siblings.forEach((item) => {
+            const $itemBtn = item.querySelector('.folding-btn');
+            const $itemPanel = item.querySelector('.folding-panel');
+            $itemBtn.classList.remove('open');
+            slideUp($itemPanel, 300);
+          });
+        }
+
+        $btn.forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const $target = e.target;
+            const $wrap = $target.closest('.ui-folding');
+            const $li = $target.closest('li');
+            const $panel = $li.querySelector('.folding-panel');
+            if ($target.classList.contains('open')) {
+              $target.classList.remove('open');
+              slideUp($panel, 300);
+            } else {
+              $target.classList.add('open');
+              slideDown($panel, 300);
+              if ($wrap.classList.contains('_toggle')) {
+                const $siblings = getSiblings($li);
+                siblingsHide($siblings);
+              }
+            }
+          });
+        });
+      }
+      jsAccordion();
     </script>
   </body>
 </html>

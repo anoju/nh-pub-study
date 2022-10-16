@@ -127,22 +127,36 @@
           <p>아코디언에서 '.folding-btn' 클릭하여 숨겨진 컨텐츠(.folding-panel)를 보여주세요</p>
           <p>.folding-btn에 open 클래스로 꺽새 방향이 바뀝니다.</p>
           <p>한번에 연속으로 다중 클릭 시를 고려해서 만들어주세요</p>
-          <p><u>상당 리스트는 해당리스트안에 숨김 컨텐츠들 상관없이 클릭하면 클릭한 영역의 숨김 컨텐츠를 제어하고, 하단 리스트는 클릭한 영역의 숨김 컨텐츠는 보여줄때는 보여지는 다른 숨김컨텐츠가 있다면 숨겨주세요</u></p>
+          <p>상당 리스트는 해당리스트안에 숨김 컨텐츠들 상관없이 클릭하면 클릭한 영역의 숨김 컨텐츠를 제어하고, 하단 리스트는 클릭한 영역의 숨김 컨텐츠는 보여줄때는 보여지는 다른 숨김컨텐츠가 있다면 숨겨주세요</p>
+          <p><u>위내용을 하나의 함수로 리스트 모두를 컨트롤 하세요. 추가 클래스나 다른 속성을 보여해도 무관합니다.</u></p>
         </div>
       </div>
     </div>
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
       // jquery
       function jqAccordion() {
         $('.folding-btn').click(function (e) {
           e.preventDefault();
-          $(this).toggleClass('open');
-          if ($(this).hasClass('open')) {
-            $('.folding-panel').stop().slideDown();
+          if ($(this).closest('.folding-list').hasClass('_on')) {
+            $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
+            if ($(this).hasClass('open')) {
+              $('.folding-panel').stop().slideUp();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $('.folding-panel').stop().slideDown();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
           } else {
-            $('.folding-panel').stop().slideUp();
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
           }
         });
       }
