@@ -13,7 +13,7 @@
         <div class="section">
           <h1 class="gd__h1">아코디언</h1>
           <h2 class="gd__h2">토글 없이</h2>
-          <ul class="folding-list folding-list1">
+          <ul class="folding-list">
             <li>
               <div class="folding-head">
                 <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
@@ -69,7 +69,7 @@
           <br />
           <br />
           <h2 class="gd__h2">토글 되게</h2>
-          <ul class="folding-list folding-list2">
+          <ul class="folding-list _toggle">
             <li>
               <div class="folding-head">
                 <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
@@ -127,50 +127,27 @@
           <p>아코디언에서 '.folding-btn' 클릭하여 숨겨진 컨텐츠(.folding-panel)를 보여주세요</p>
           <p>.folding-btn에 open 클래스로 꺽새 방향이 바뀝니다.</p>
           <p>한번에 연속으로 다중 클릭 시를 고려해서 만들어주세요</p>
-          <p><u>상당 리스트는 해당리스트안에 숨김 컨텐츠들 상관없이 클릭하면 클릭한 영역의 숨김 컨텐츠를 제어하고, 하단 리스트는 클릭한 영역의 숨김 컨텐츠는 보여줄때는 보여지는 다른 숨김컨텐츠가 있다면 숨겨주세요</u></p>
+          <p>상당 리스트는 해당리스트안에 숨김 컨텐츠들 상관없이 클릭하면 클릭한 영역의 숨김 컨텐츠를 제어하고, 하단 리스트는 클릭한 영역의 숨김 컨텐츠는 보여줄때는 보여지는 다른 숨김컨텐츠가 있다면 숨겨주세요</p>
+          <p><u>위내용을 하나의 함수로 리스트 모두를 컨트롤 하세요. 추가 클래스나 다른 속성을 보여해도 무관합니다.</u></p>
         </div>
       </div>
     </div>
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
-      // jquery
-      // function jqAccordion() {
-      //   $('.folding-btn').click(function (e) {
-      //     e.preventDefault();
-      //     $(this).toggleClass('open');
-      //     if ($(this).hasClass('open')) {
-      //       $('.folding-panel').stop().slideDown();
-      //     } else {
-      //       $('.folding-panel').stop().slideUp();
-      //     }
-      //   });
-      // }
-      // jqAccordion();
-
-      function ph_accordian1() {
-        $('.folding-list1 .folding-btn').click(function (e) {
-          e.preventDefault();
-          const PANEL = $(this).parent('.folding-head').siblings('.folding-panel');
-
-          $(this).toggleClass('open');
-          if ($(this).hasClass('open')) {
-            $(PANEL).stop().slideDown(300);
-          } else {
-            $(PANEL).stop().slideUp(300);
-          }
-        });
-      }
-      ph_accordian1();
-
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
       function ph_accordian2() {
-        $('.folding-list2 .folding-btn').click(function (e) {
+        $('.folding-list .folding-btn').click(function (e) {
           e.preventDefault();
           const PANEL = $(this).parent('.folding-head').siblings('.folding-panel');
           $(this).toggleClass('open');
           if ($(this).hasClass('open')) {
             $(PANEL).stop().slideDown(300);
-            $(this).closest('li').siblings().find('.folding-panel').stop().slideUp(300);
+            if ($(this).closest('.folding-list').hasClass('_toggle')) {
+              $(this).closest('li').siblings().find('.folding-btn').removeClass('open');
+              $(this).closest('li').siblings().find('.folding-panel').stop().slideUp(300);
+            }
           } else {
             $(PANEL).stop().slideUp(300);
           }
