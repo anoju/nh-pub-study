@@ -13,41 +13,59 @@
         <div class="section">
           <h1 class="gd__h1">탭메뉴</h1>
 
-          <div class="tab-line-menu">
+          <div class="tab-line-menu tab-ul">
             <div class="tab-inner">
               <i class="tab-line" aria-hidden="true"></i>
               <ul class="tab-list">
-                <li class="tab active"><a href="#">텝메뉴1</a></li>
-                <li class="tab"><a href="#">텝메뉴2</a></li>
-                <li class="tab"><a href="#">텝메뉴3</a></li>
-                <li class="tab"><a href="#">텝메뉴4</a></li>
+                <li class="tab active"><a href="#tab1-1">텝메뉴1</a></li>
+                <li class="tab"><a href="#tab1-2">텝메뉴2</a></li>
+                <li class="tab"><a href="#tab1-3">텝메뉴3</a></li>
+                <li class="tab"><a href="#tab1-4">텝메뉴4</a></li>
               </ul>
             </div>
           </div>
           <br />
-          <div class="tab-line-menu">
+          <div id="tab1-1" class="tab-panel active"><h2>탭내용입니다. 111</h2></div>
+          <div id="tab1-2" class="tab-panel"><h2>탭내용입니다. 222</h2></div>
+          <div id="tab1-3" class="tab-panel"><h2>탭내용입니다. 333</h2></div>
+          <div id="tab1-4" class="tab-panel"><h2>탭내용입니다. 444</h2></div>
+          <br />
+          <br />
+          <div class="tab-line-menu tab-ul">
             <div class="tab-inner">
               <i class="tab-line" aria-hidden="true"></i>
               <ul class="tab-list">
-                <li class="tab"><a href="#">텝메뉴1</a></li>
-                <li class="tab active"><a href="#">텝메뉴2</a></li>
-                <li class="tab"><a href="#">텝메뉴3</a></li>
-                <li class="tab"><a href="#">텝메뉴4</a></li>
+                <li class="tab"><a href="#tab2-1">텝메뉴1</a></li>
+                <li class="tab active"><a href="#tab2-2">텝메뉴2</a></li>
+                <li class="tab"><a href="#tab2-3">텝메뉴3</a></li>
+                <li class="tab"><a href="#tab2-4">텝메뉴4</a></li>
               </ul>
             </div>
           </div>
           <br />
-          <div class="tab-round-menu">
+          <div id="tab2-1" class="tab-panel"><h2>탭내용입니다. 111</h2></div>
+          <div id="tab2-2" class="tab-panel active"><h2>탭내용입니다. 222</h2></div>
+          <div id="tab2-3" class="tab-panel"><h2>탭내용입니다. 333</h2></div>
+          <div id="tab2-4" class="tab-panel"><h2>탭내용입니다. 444</h2></div>
+          <br />
+          <br />
+          <div class="tab-round-menu tab-ul">
             <div class="tab-inner">
               <i class="tab-line" aria-hidden="true"></i>
               <ul class="tab-list">
-                <li class="tab"><a href="#">#탭메뉴1</a></li>
-                <li class="tab"><a href="#">#탭메뉴2</a></li>
-                <li class="tab active"><a href="#">#탭메뉴3</a></li>
-                <li class="tab"><a href="#">#탭메뉴4</a></li>
+                <li class="tab"><a href="#tab3-1">#탭메뉴1</a></li>
+                <li class="tab"><a href="#tab3-2">#탭메뉴2</a></li>
+                <li class="tab active"><a href="#tab3-3">#탭메뉴3</a></li>
+                <li class="tab"><a href="#tab3-4">#탭메뉴4</a></li>
               </ul>
             </div>
           </div>
+          <br />
+          <div id="tab3-1" class="tab-panel"><h2>탭내용입니다. 111</h2></div>
+          <div id="tab3-2" class="tab-panel"><h2>탭내용입니다. 222</h2></div>
+          <div id="tab3-3" class="tab-panel active"><h2>탭내용입니다. 333</h2></div>
+          <div id="tab3-4" class="tab-panel"><h2>탭내용입니다. 444</h2></div>
+          <br />
           <br />
           <p>탭메뉴(.tab-line-menu)를 클릭하여 해당메뉴를 활성화 시켜보세요.</p>
           <p>.tab 영역에 .active 클래스로 활성화 할 수 있습니다.</p>
@@ -57,7 +75,7 @@
         </div>
       </div>
     </div>
-
+    <div id="div1">d</div>
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
@@ -68,6 +86,29 @@
       // parent(), closest(), siblings(), find(), children()
       // outerWidth(), position()
       // stop(), animate()
+
+      function tabul() {
+        $('.tab-ul a').on('click', function (e) {
+          e.preventDefault(); // 기본 이벤트동작을 막는다.
+          const $href = $(this).attr('href'); // 내가 클릭한 a 태그 속성값을 가져온다
+          $(this).parent().addClass('active').siblings().removeClass('active'); // 내가 클릭한 a 부모 li에는 active, 그 형제 li는 active 제거
+          $(this)
+            .parent()
+            .siblings()
+            .each(function (e) {
+              // event를 안넣으면 ??
+              const $btn = $(this).find('a'); // 선택한 a의 ~ 형제li의 a 태그들
+              const $btnHref = $btn.attr('href');
+              $($btnHref).removeClass('active');
+            });
+          $($href).addClass('active');
+        });
+      }
+      // tabul();
+
+      function tabul2() {
+        // 자바스크립트로 만들기
+      }
     </script>
   </body>
 </html>

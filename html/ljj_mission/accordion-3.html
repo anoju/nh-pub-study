@@ -137,6 +137,30 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      // jquery
+      function jqAccordion() {
+        $('.folding-btn').click(function (e) {
+          e.preventDefault();
+          if ($(this).closest('.folding-list').hasClass('_on')) {
+            $(this).addClass('open').closest('li').siblings().find('.folding-btn').removeClass('open');
+            if ($(this).hasClass('open')) {
+              $('.folding-panel').stop().slideUp();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $('.folding-panel').stop().slideDown();
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
+          } else {
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideDown();
+            } else {
+              $(this).closest('.folding-head').siblings('.folding-panel').stop().slideUp();
+            }
+          }
+        });
+      }
+      jqAccordion();
     </script>
   </body>
 </html>
