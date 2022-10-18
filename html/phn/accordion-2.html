@@ -167,10 +167,14 @@
         $('.folding-list2 .folding-btn').click(function (e) {
           e.preventDefault();
           const PANEL = $(this).parent('.folding-head').siblings('.folding-panel');
+
           $(this).toggleClass('open');
           if ($(this).hasClass('open')) {
             $(PANEL).stop().slideDown(300);
-            $(this).closest('li').siblings().find('.folding-panel').stop().slideUp(300);
+            if ($(this).closest('.folding-list').hasClass('.folding-list2')) {
+              $(this).closest('li').siblings().find('.folding-btn').removeClass('open');
+              $(this).closest('li').siblings().find('.folding-panel').stop().slideUp(300);
+            }
           } else {
             $(PANEL).stop().slideUp(300);
           }
