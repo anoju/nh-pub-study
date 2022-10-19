@@ -99,9 +99,9 @@
           conttab(e.target.dataset.tab);
         });
       }
+      Jqtab();
 
       // 내용 active관련 함수
-      Jqtab();
       function conttab(i) {
         // 두줄로 하면 잘 되는데 왜 한줄에 넣으면 왜 안되나요.. ?
         $('.tab-panel').eq(i).closest('.tabwrap').children('.tab-panel').addClass('active'); //.eq(i).siblings().removeClass('active')
