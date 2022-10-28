@@ -81,6 +81,43 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      const $headH = $('.page-head').outerHeight();
+      const $tabH = $('.tab-fixed').outerHeight();
+
+      $('.tab-line-menu a').click(function (e) {
+        e.preventDefault();
+        const $this = $(this);
+        const $idx = $this.closest('.tab').index();
+        const $box = $('.box').eq($idx);
+        const $boxTop = $box.offset().top;
+        const $sclVal = $boxTop - $headH - $tabH;
+        $('html, body').stop().animate({ scrollTop: $sclVal }, 300);
+      });
+
+      let boxTopAry = [];
+      function boxSclChk(sclTop) {
+        boxTopAry = [];
+        $('.box').each(function () {
+          const $this = $(this);
+          // const $top = $this.offset().top;
+          const $top = Math.round($this.offset().top);
+          boxTopAry.push($top - $headH - $tabH);
+        });
+        let idx = 0;
+        $.each(boxTopAry, function (i) {
+          if (this <= sclTop) idx = i;
+        });
+        return idx;
+      }
+      function tabScrollActive() {
+        const $sclTop = Math.round($(window).scrollTop());
+        // const $sclTop = $(window).scrollTop();
+        const $idx = boxSclChk($sclTop);
+        $('.tab-line-menu .tab').eq($idx).addClass('active').siblings().removeClass('active');
+      }
+      tabScrollActive();
+      $(window).scroll(tabScrollActive);
+      $(window).resize(tabScrollActive);
     </script>
   </body>
 </html>
