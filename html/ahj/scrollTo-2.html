@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <style>
+      .box {
+        height: 500vh;
+        background: linear-gradient(to bottom, blue, red);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <h1>scroll animate</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="section">
+          <ul class="txt-list">
+            <li class="dot">현재 스크롤된 상태에서 [스크롤]을 클릭하면 input값만큼 하단으로 스크롤</li>
+          </ul>
+          <br />
+          <div class="box"></div>
+          <div class="btn-wrap bottom-fixed">
+            <div class="flex">
+              <div class="input"><input type="tel" value="100" class="scroll-val" /></div>
+              <button type="button" class="button h60 primary btn-scroll">스크롤</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script>
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      $('.btn-scroll').click(function () {
+        // const $sclT = $(window).scrollTop();
+        const sclVal = parseInt($('.scroll-val').val());
+        $('html, body')
+          .stop()
+          .animate({ scrollTop: '+=' + sclVal }, 300);
+      });
+    </script>
+  </body>
+</html>

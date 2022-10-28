@@ -59,9 +59,6 @@
           <ul class="txt-list">
             <li class="dot">탭을 클릭하면 해당하는 box까지 스크롤</li>
             <li class="dot">단, header나 tab에 box의상단이 가려지면 안됨</li>
-            <li class="dot">해당 박스에 이동하면 탭도 활성화표시</li>
-            <li class="dot">꼭 1개는 탭이 활성화되야하며, 1개만 활성화되야함(2개이상 안됨)</li>
-            <li class="dot">힌트. 클릭 이벤트로 활성화해서는 안된다</li>
           </ul>
           <br />
           <div>
@@ -81,6 +78,17 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      $('.tab-line-menu a').click(function (e) {
+        e.preventDefault();
+        const $this = $(this);
+        const $idx = $this.closest('.tab').index();
+        const $box = $('.box').eq($idx);
+        const $boxTop = $box.offset().top;
+        const $headH = $('.page-head').outerHeight();
+        const $tabH = $('.tab-fixed').outerHeight();
+        const $sclVal = $boxTop - $headH - $tabH;
+        $('html, body').stop().animate({ scrollTop: $sclVal }, 300);
+      });
     </script>
   </body>
 </html>
