@@ -31,6 +31,9 @@
       .box:nth-child(7) {
         background: purple;
       }
+      .tab-line {
+        transition: 0.3s;
+      }
     </style>
   </head>
   <body>
@@ -65,7 +68,7 @@
           </ul>
           <br />
           <div>
-            <div class="box"></div>
+            <div class="box box1"></div>
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
@@ -73,6 +76,14 @@
             <div class="box"></div>
             <div class="box"></div>
           </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     </div>
@@ -81,43 +92,91 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-      const $headH = $('.page-head').outerHeight();
-      const $tabH = $('.tab-fixed').outerHeight();
+      function tabScrollSpy() {
+        const $headH = $('.page-head').outerHeight();
+        const $tabH = $('.tab-fixed').outerHeight();
 
-      $('.tab-line-menu a').click(function (e) {
-        e.preventDefault();
-        const $this = $(this);
-        const $idx = $this.closest('.tab').index();
-        const $box = $('.box').eq($idx);
-        const $boxTop = $box.offset().top;
-        const $sclVal = $boxTop - $headH - $tabH;
-        $('html, body').stop().animate({ scrollTop: $sclVal }, 300);
-      });
-
-      let boxTopAry = [];
-      function boxSclChk(sclTop) {
-        boxTopAry = [];
-        $('.box').each(function () {
+        $('.tab-line-menu a').click(function (e) {
+          e.preventDefault();
           const $this = $(this);
-          // const $top = $this.offset().top;
-          const $top = Math.round($this.offset().top);
-          boxTopAry.push($top - $headH - $tabH);
+          const $idx = $this.closest('.tab').index();
+          const $box = $('.box').eq($idx);
+          const $boxTop = $box.offset().top;
+          const $sclVal = $boxTop - $headH - $tabH;
+          $('html, body').stop().animate({ scrollTop: $sclVal }, 300);
         });
-        let idx = 0;
-        $.each(boxTopAry, function (i) {
-          if (this <= sclTop) idx = i;
-        });
-        return idx;
+
+        let boxTopAry = [];
+        function boxTopChk() {
+          boxTopAry = [];
+          $('.box').each(function () {
+            const $this = $(this);
+            // const $top = $this.offset().top;
+            const $top = Math.floor($this.offset().top);
+            boxTopAry.push($top - $headH - $tabH);
+          });
+        }
+
+        function boxSclChk(sclTop) {
+          let idx = 0;
+          $.each(boxTopAry, function (i) {
+            if (this <= sclTop) idx = i;
+          });
+          return idx;
+        }
+        function tabActiveInfo(wrap) {
+          const $el = $(wrap).find('.tab.active');
+          const $left = $el.position().left;
+          const $top = $el.position().top;
+          const $width = $el.outerWidth();
+          const $height = $el.outerHeight();
+          return { el: $el, left: $left, top: $top, width: $width, height: $height };
+        }
+        function tabLine(wrap) {
+          const $active = tabActiveInfo(wrap).el;
+          const $activeLeft = tabActiveInfo(wrap).left;
+          const $activeWidth = tabActiveInfo(wrap).width;
+          const $line = $(wrap).find('.tab-line');
+          const $lineLeft = parseInt($line.css('left'));
+          const $lineWidth = parseInt($line.css('left'));
+          if ($lineLeft === $activeLeft && $activeWidth === $lineWidth) return;
+          $line.css({
+            left: $activeLeft,
+            width: $activeWidth
+          });
+        }
+
+        function tabCenter(wrap) {
+          let $oldSclLeft = $(wrap).data('sclLeft');
+          if (!$oldSclLeft) $oldSclLeft = 0;
+          const $active = tabActiveInfo(wrap).el;
+          const $activeLeft = tabActiveInfo(wrap).left;
+          const $activeWidth = tabActiveInfo(wrap).width;
+          const $wrapWidth = $(wrap).outerWidth();
+          const $left = $activeLeft + $activeWidth / 2 - $wrapWidth / 2;
+          if ($oldSclLeft === $left) return;
+          $(wrap).data('sclLeft', $left);
+          $(wrap).stop().animate({ scrollLeft: $left }, 300);
+        }
+
+        function scrollEvt() {
+          const $sclTop = Math.round($(window).scrollTop());
+          // const $sclTop = $(window).scrollTop();
+          const $idx = boxSclChk($sclTop);
+          $('.tab-line-menu .tab').eq($idx).addClass('active').siblings().removeClass('active');
+          tabLine('.tab-line-menu');
+          tabCenter('.tab-line-menu .tab-inner');
+        }
+
+        function initEvt() {
+          boxTopChk();
+          scrollEvt();
+        }
+        $(window).on('load', initEvt);
+        $(window).scroll(scrollEvt);
+        $(window).resize(initEvt);
       }
-      function tabScrollActive() {
-        const $sclTop = Math.round($(window).scrollTop());
-        // const $sclTop = $(window).scrollTop();
-        const $idx = boxSclChk($sclTop);
-        $('.tab-line-menu .tab').eq($idx).addClass('active').siblings().removeClass('active');
-      }
-      tabScrollActive();
-      $(window).scroll(tabScrollActive);
-      $(window).resize(tabScrollActive);
+      tabScrollSpy();
     </script>
   </body>
 </html>
