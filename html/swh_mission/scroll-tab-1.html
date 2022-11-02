@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <style>
+      .box {
+        height: 100vh;
+      }
+      .box:nth-child(1) {
+        background: red;
+      }
+      .box:nth-child(2) {
+        background: orange;
+      }
+      .box:nth-child(3) {
+        background: yellow;
+      }
+      .box:nth-child(4) {
+        background: green;
+      }
+      .box:nth-child(5) {
+        background: blue;
+      }
+      .box:nth-child(6) {
+        background: darkblue;
+      }
+      .box:nth-child(7) {
+        background: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <h1>scroll animate</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="tab-line-menu tab-fixed">
+          <div class="tab-inner">
+            <i class="tab-line" aria-hidden="true"></i>
+            <ul class="tab-list">
+              <li class="tab"><a href="#">red</a></li>
+              <li class="tab"><a href="#">orange</a></li>
+              <li class="tab"><a href="#">yellow</a></li>
+              <li class="tab"><a href="#">green</a></li>
+              <li class="tab"><a href="#">blue</a></li>
+              <li class="tab"><a href="#">darkblue</a></li>
+              <li class="tab"><a href="#">purple</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="section">
+          <ul class="txt-list">
+            <li class="dot">탭을 클릭하면 해당하는 box까지 스크롤</li>
+            <li class="dot">단, header나 tab에 box의상단이 가려지면 안됨</li>
+          </ul>
+          <br />
+          <div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script>
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+    </script>
+  </body>
+</html>
