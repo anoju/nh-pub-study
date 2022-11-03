@@ -165,30 +165,40 @@ var requestAnimFrame = (function () {
   );
 })();
 
-function scrollTo(to, duration, callback) {
+function scrollTo(option, duration, callback) {
+  const _top = option.top || 0;
+  const _left = option.left || 0;
   // because it's so fucking difficult to detect the scrolling element, just move them all
-  function move(amount) {
-    document.documentElement.scrollTop = amount;
-    document.body.parentNode.scrollTop = amount;
-    document.body.scrollTop = amount;
+  function move(top, left) {
+    document.documentElement.scrollTop = top;
+    document.body.parentNode.scrollTop = top;
+    document.body.scrollTop = top;
+    document.documentElement.scrollLeft = left;
+    document.body.parentNode.scrollLeft = left;
+    document.body.scrollLeft = left;
   }
   function position() {
-    return document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
+    const _top = document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
+    const _left = document.documentElement.scrollLeft || document.body.parentNode.scrollLeft || document.body.scrollLeft;
+    return { top: _top, left: _left };
   }
-  var start = position(),
-    change = to - start,
-    currentTime = 0,
-    increment = 20;
-  duration = typeof duration === 'undefined' ? 500 : duration;
-  var animateScroll = function () {
+  const startTop = position().top;
+  const changeTop = _top - startTop;
+  const startLeft = position().left;
+  const changeLeft = _left - startLeft;
+  let currentTime = 0;
+  const increment = 20;
+  const _duration = typeof duration === 'undefined' ? 500 : duration;
+  const animateScroll = function () {
     // increment the time
     currentTime += increment;
     // find the value with the quadratic in-out easing function
-    var val = Math.easeInOutQuad(currentTime, start, change, duration);
+    const top = Math.easeInOutQuad(currentTime, startTop, changeTop, _duration);
+    const left = Math.easeInOutQuad(currentTime, startLeft, changeLeft, _duration);
     // move the document.body
-    move(val);
+    move(top, left);
     // do the animation unless its over
-    if (currentTime < duration) {
+    if (currentTime < _duration) {
       requestAnimFrame(animateScroll);
     } else {
       if (callback && typeof callback === 'function') {

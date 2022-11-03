@@ -58,7 +58,8 @@
           const _target = e.target;
           let _sclTop = document.documentElement.scrollHeight;
           if (_target.classList.contains('to-top')) _sclTop = 0;
-          scrollTo(_sclTop, 100, function () {
+          console.log(_sclTop);
+          scrollTo({ top: _sclTop }, 1000, function () {
             console.log('aaa');
           });
           // window.scrollTo({ top: _sclTop, behavior: 'smooth' });
