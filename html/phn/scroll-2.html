@@ -41,11 +41,18 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      let num = 0;
       $(document).ready(function () {
         $('.button.primary').on('click', function () {
           const $value = document.getElementById('input').value;
-          console.log($value);
-          $('html, body').animate({ scrollTop: '+=' + $value });
+          const $sclTop = $(window).scrollTop();
+          //console.log($value);
+          // $('html, body').animate({ scrollTop: '+=' + $value });
+          $('html, body').animate({ scrollTop: '+=300' });
+          //$('html, body').animate({ scrollTop: $sclTop + $value });
+          //num = num + 1;
+          num += 1;
+          console.log(num);
         });
       });
     </script>
