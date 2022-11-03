@@ -42,17 +42,14 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-      $(document).ready(function () {
-        $(window).scroll(function () {
-          const TOP = $(this).scrollTop();
-          console.log(TOP);
-        });
-        $('.button.primary').on('click', function () {
-          $('html, bpdy').animate({ scrollTop: '0' }, 300);
-        });
-        $('.button.gray').on('click', function () {
-          $('html, bpdy').animate({ scrollTop: '3523px' }, 300);
-        });
+      const sclH = $('html').prop('scrollHeight');
+      console.log(sclH);
+
+      $('.button.primary').on('click', function () {
+        $('html, bpdy').animate({ scrollTop: 0 }, 300);
+      });
+      $('.button.gray').on('click', function () {
+        $('html, bpdy').animate({ scrollTop: sclH }, 300);
       });
     </script>
   </body>
