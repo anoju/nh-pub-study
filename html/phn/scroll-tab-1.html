@@ -45,13 +45,13 @@
           <div class="tab-inner">
             <i class="tab-line" aria-hidden="true"></i>
             <ul class="tab-list">
-              <li class="tab"><a href="#">red</a></li>
-              <li class="tab"><a href="#">orange</a></li>
-              <li class="tab"><a href="#">yellow</a></li>
-              <li class="tab"><a href="#">green</a></li>
-              <li class="tab"><a href="#">blue</a></li>
-              <li class="tab"><a href="#">darkblue</a></li>
-              <li class="tab"><a href="#">purple</a></li>
+              <li class="tab"><a href="#red">red</a></li>
+              <li class="tab"><a href="#orange">orange</a></li>
+              <li class="tab"><a href="#yellow">yellow</a></li>
+              <li class="tab"><a href="#green">green</a></li>
+              <li class="tab"><a href="#blue">blue</a></li>
+              <li class="tab"><a href="#darkblue">darkblue</a></li>
+              <li class="tab"><a href="#purple">purple</a></li>
             </ul>
           </div>
         </div>
@@ -62,13 +62,13 @@
           </ul>
           <br />
           <div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+            <div class="box" id="red"></div>
+            <div class="box" id="orange"></div>
+            <div class="box" id="yellow"></div>
+            <div class="box" id="green"></div>
+            <div class="box" id="blue"></div>
+            <div class="box" id="darkblue"></div>
+            <div class="box" id="purple"></div>
           </div>
         </div>
       </div>
@@ -78,6 +78,32 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      $(document).ready(function () {
+        $(window).scroll(function () {
+          const TOP = $(window).scrollTop();
+          console.log(TOP);
+        });
+
+        $('.tab a').on('click', function () {
+          const $href = $(this).attr('href');
+
+          if ($href == '#red') {
+            $('html, body').animate({ scrollTop: '187px' });
+          } else if ($href == '#orange') {
+            $('html, body').animate({ scrollTop: '1027px' });
+          } else if ($href == '#yellow') {
+            $('html, body').animate({ scrollTop: '1780px' });
+          } else if ($href == '#green') {
+            $('html, body').animate({ scrollTop: '2707px' });
+          } else if ($href == '#blue') {
+            $('html, body').animate({ scrollTop: '3547px' });
+          } else if ($href == '#darkblue') {
+            $('html, body').animate({ scrollTop: '4387px' });
+          } else if ($href == '#purple') {
+            $('html, body').animate({ scrollTop: '5227px' });
+          }
+        });
+      });
     </script>
   </body>
 </html>

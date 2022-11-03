@@ -45,7 +45,7 @@
         $('.button.primary').on('click', function () {
           const $value = document.getElementById('input').value;
           console.log($value);
-          $('html, body').animate({ scrollTop: $value });
+          $('html, body').animate({ scrollTop: '+=' + $value });
         });
       });
     </script>
