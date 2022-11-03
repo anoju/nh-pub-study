@@ -131,3 +131,68 @@ function slideDown(elem, speed, fn) {
   });
   slideAryAdd(elem, slideAnime);
 }
+
+window.requestAnimFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    }
+  );
+})();
+function winScrollTo(option, speed, callback) {
+  // scrollTargetY: the target scrollY property of the window
+  // speed: time in pixels per second
+  // easing: easing equation to use
+
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+  const scrollTargetX = option.left || 0;
+  const scrollTargetY = option.top || 0;
+  const _speed = speed || 2000;
+  const _easing = option.easing || 'easeOutSine';
+  let currentTime = 0;
+
+  // min time .1, max time .8 seconds
+  let time = Math.max(0.1, Math.min(Math.abs(scrollY - scrollTargetY) / _speed, 0.8));
+  console.log(time);
+  // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
+  const PI_D2 = Math.PI / 2;
+  const easingEquations = {
+    easeOutSine: function (pos) {
+      return Math.sin(pos * (Math.PI / 2));
+    },
+    easeInOutSine: function (pos) {
+      return -0.5 * (Math.cos(Math.PI * pos) - 1);
+    },
+    easeInOutQuint: function (pos) {
+      if ((pos /= 0.5) < 1) {
+        return 0.5 * Math.pow(pos, 5);
+      }
+      return 0.5 * (Math.pow(pos - 2, 5) + 2);
+    }
+  };
+
+  // add animation loop
+  function tick() {
+    currentTime += 1 / 60;
+
+    const p = currentTime / time;
+    console.log(p);
+    const t = easingEquations[_easing](p);
+
+    if (p < 1) {
+      requestAnimFrame(tick);
+
+      window.scrollTo(scrollX + (scrollTargetX - scrollX) * t, scrollY + (scrollTargetY - scrollY) * t);
+    } else {
+      window.scrollTo(scrollTargetX, scrollTargetY);
+      if (!!callback) callback();
+    }
+  }
+
+  // call it once to get started
+  tick();
+}

@@ -39,6 +39,7 @@
     </div>
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/ahj.js"></script>
     <script>
       function jqScroll() {
         $('.btn-scroll').click(function (e) {
@@ -46,7 +47,7 @@
           const $this = $(this);
           let sclVal = $('body')[0].scrollHeight;
           if ($this.hasClass('to-top')) sclVal = 0;
-          $('html, body').stop().animate({ scrollTop: sclVal }, 300);
+          $('html, body').stop().animate({ scrollTop: sclVal }, 100);
         });
       }
       // jqScroll();
@@ -57,7 +58,10 @@
           const _target = e.target;
           let _sclTop = document.documentElement.scrollHeight;
           if (_target.classList.contains('to-top')) _sclTop = 0;
-          window.scrollTo({ top: _sclTop, behavior: 'smooth' });
+          winScrollTo({ top: _sclTop }, 500, function () {
+            console.log('aaa');
+          });
+          // window.scrollTo({ top: _sclTop, behavior: 'smooth' });
         }
         const _btnScl = document.querySelectorAll('.btn-scroll');
         _btnScl.forEach(function (_btn) {
