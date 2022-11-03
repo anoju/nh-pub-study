@@ -44,14 +44,14 @@
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
       $(document).ready(function () {
         $(window).scroll(function () {
-          const TOP = $(window).scrollTop();
+          const TOP = $(this).scrollTop();
           console.log(TOP);
         });
         $('.button.primary').on('click', function () {
-          $('html, body').animate({ scrollTop: '0' }, 300);
+          $('html, bpdy').animate({ scrollTop: '0' }, 300);
         });
         $('.button.gray').on('click', function () {
-          $('html, body').animate({ scrollTop: '3523px' }, 300);
+          $('html, bpdy').animate({ scrollTop: '3523px' }, 300);
         });
       });
     </script>
