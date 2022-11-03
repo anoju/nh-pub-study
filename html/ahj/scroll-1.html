@@ -40,15 +40,31 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
-      // 스크립트 작성이 여기에
-      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-      $('.btn-scroll').click(function (e) {
-        e.preventDefault();
-        const $this = $(this);
-        let sclVal = $('body')[0].scrollHeight;
-        if ($this.hasClass('to-top')) sclVal = 0;
-        $('html, body').stop().animate({ scrollTop: sclVal }, 300);
-      });
+      function jqScroll() {
+        $('.btn-scroll').click(function (e) {
+          e.preventDefault();
+          const $this = $(this);
+          let sclVal = $('body')[0].scrollHeight;
+          if ($this.hasClass('to-top')) sclVal = 0;
+          $('html, body').stop().animate({ scrollTop: sclVal }, 300);
+        });
+      }
+      // jqScroll();
+
+      function jsScroll() {
+        function scrollMove(e) {
+          e.preventDefault();
+          const _target = e.target;
+          let _sclTop = document.documentElement.scrollHeight;
+          if (_target.classList.contains('to-top')) _sclTop = 0;
+          window.scrollTo({ top: _sclTop, behavior: 'smooth' });
+        }
+        const _btnScl = document.querySelectorAll('.btn-scroll');
+        _btnScl.forEach(function (_btn) {
+          _btn.addEventListener('click', scrollMove);
+        });
+      }
+      jsScroll();
     </script>
   </body>
 </html>
