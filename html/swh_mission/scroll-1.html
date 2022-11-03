@@ -45,10 +45,11 @@
       document.querySelector('.btn-wrap').addEventListener('click', function (e) {
         const bottom = document.querySelector('.gray');
         const top = document.querySelector('.primary');
+        const end = document.querySelector('html').scrollHeight;
         if (e.target == bottom) {
-          document.body.scrollIntoView(false);
+          window.scrollTo({ top: end, behavior: 'smooth' });
         } else if (e.target == top) {
-          document.body.scrollIntoView(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           null;
         }

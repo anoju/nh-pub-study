@@ -40,12 +40,18 @@
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
+      // scrollTo = 현재 윈도우 스크롤 탑값 + input값을 더한거
+
       document.querySelector('.button').addEventListener('click', function (e) {
         const $input = document.querySelector('.input input').value;
-
-        window.scrollTo({ top: $input, behavior: 'smooth' });
+        const end = document.querySelector('html').scrollHeight;
+        const nowscroll = window.offsetTop;
+        if (end > $input) {
+          window.scrollTo({ top: '+=' + $input, behavior: 'smooth' });
+        }
       });
-
+      //window.scrollBy() 메서드는 선택한 요소에 스크롤 값(상대 위치)을 설정합니다.
+      //window.scrollTo() 메서드는 선택한 요소에 스크롤 값(절대 위치)을 설정합니다.
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
     </script>
   </body>

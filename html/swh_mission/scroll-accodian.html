@@ -52,6 +52,78 @@
                 내용<br />
                 내용<br />
                 내용<br />
+              </div>
+            </li>
+            <li>
+              <div class="folding-head">
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
+              </div>
+              <div class="folding-panel">
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+
+                내용<br />
+              </div>
+            </li>
+            <li>
+              <div class="folding-head">
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
+              </div>
+              <div class="folding-panel">
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
                 내용<br />
                 내용<br />
                 내용<br />
@@ -76,6 +148,36 @@
                 <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
               </div>
               <div class="folding-panel">
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
+                내용<br />
                 내용<br />
                 내용<br />
                 내용<br />
@@ -179,10 +281,39 @@
         </div>
       </div>
     </div>
-
+    <div clas="t1">d</div>
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
+
+      function accordion() {
+        $('.folding-btn').on('click', function (e) {
+          e.preventDefault();
+          if ($(this).hasClass('open')) {
+            $(this).removeClass('open');
+            $(this).closest('.folding-head').next('.folding-panel').stop().slideUp(300);
+          } else {
+            $(this).addClass('open');
+            $(this)
+              .closest('.folding-head')
+              .next('.folding-panel')
+              .stop()
+              .slideDown(300, function () {
+                var $liHeight = $(this).closest('li').outerHeight(true);
+                var $offsetTop = $(this).closest('li').offset().top;
+                var $sum = $liHeight + $offsetTop;
+
+                $(this).closest('li').get(0).scrollIntoView(true);
+                //$('li').animate({ top: '40' }, 'slow');
+                console.log($offsetTop, 'offset top 높이');
+                console.log($liHeight, 'li 슬라이드다운 높이');
+                console.log($sum, '2개 높이');
+              });
+            // 어렵다.
+          }
+        });
+      }
+      accordion();
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
     </script>
   </body>
