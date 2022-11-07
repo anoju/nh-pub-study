@@ -76,19 +76,53 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
-      // 스크립트 작성이 여기에
-      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-      $('.tab-line-menu a').click(function (e) {
-        e.preventDefault();
-        const $this = $(this);
-        const $idx = $this.closest('.tab').index();
-        const $box = $('.box').eq($idx);
-        const $boxTop = $box.offset().top;
-        const $headH = $('.page-head').outerHeight();
-        const $tabH = $('.tab-fixed').outerHeight();
-        const $sclVal = $boxTop - $headH - $tabH;
-        $('html, body').stop().animate({ scrollTop: $sclVal }, 300);
-      });
+      function jqScroll() {
+        $('.tab-line-menu a').click(function (e) {
+          e.preventDefault();
+          const $this = $(this);
+          const $idx = $this.closest('.tab').index();
+          const $box = $('.box').eq($idx);
+          const $boxTop = $box.offset().top;
+          const $headH = $('.page-head').outerHeight();
+          const $tabH = $('.tab-fixed').outerHeight();
+          const $sclVal = $boxTop - $headH - $tabH;
+          $('html, body').stop().animate({ scrollTop: $sclVal }, 300);
+        });
+      }
+      // jqScroll();
+      function getOffset(element) {
+        let $elX = 0;
+        let $elY = 0;
+        while (element && !Number.isNaN(element.offsetLeft) && !Number.isNaN(element.offsetTop)) {
+          $elX += element.offsetLeft;
+          $elY += element.offsetTop;
+          element = element.offsetParent;
+        }
+        return { left: $elX, top: $elY };
+      }
+      function jsScroll() {
+        const _headH = document.querySelector('.page-head').offsetHeight;
+        const _tabH = document.querySelector('.tab-fixed').offsetHeight;
+
+        function scrollMove(btn, idx) {
+          const _boxes = document.querySelectorAll('.box');
+          const _box = _boxes[idx];
+          // const _boxTop = _box.offsetTop;
+          const _boxTop = getOffset(_box).top;
+          const _moveTop = _boxTop - _headH - _tabH;
+          console.log(_moveTop);
+          window.scrollTo({ top: _moveTop, behavior: 'smooth' });
+        }
+
+        const _tabBtn = document.querySelectorAll('.tab-line-menu a');
+        _tabBtn.forEach(function (btn, idx) {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            scrollMove(btn, idx);
+          });
+        });
+      }
+      jsScroll();
     </script>
   </body>
 </html>

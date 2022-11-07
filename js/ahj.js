@@ -131,3 +131,81 @@ function slideDown(elem, speed, fn) {
   });
   slideAryAdd(elem, slideAnime);
 }
+
+// easing functions http://goo.gl/5HLl8
+Math.easeInOutQuad = function (t, b, c, d) {
+  t /= d / 2;
+  if (t < 1) {
+    return (c / 2) * t * t + b;
+  }
+  t--;
+  return (-c / 2) * (t * (t - 2) - 1) + b;
+};
+
+Math.easeInCubic = function (t, b, c, d) {
+  const tc = (t /= d) * t * t;
+  return b + c * tc;
+};
+
+Math.inOutQuintic = function (t, b, c, d) {
+  const ts = (t /= d) * t;
+  const tc = ts * t;
+  return b + c * (6 * tc * ts + -15 * ts * ts + 10 * tc);
+};
+
+// requestAnimationFrame for Smart Animating http://goo.gl/sx5sts
+const requestAnimFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    }
+  );
+})();
+
+function scrollTo(option, duration, callback) {
+  const _top = option.top || 0;
+  const _left = option.left || 0;
+  // because it's so fucking difficult to detect the scrolling element, just move them all
+  function move(top, left) {
+    document.documentElement.scrollTop = top;
+    document.body.parentNode.scrollTop = top;
+    document.body.scrollTop = top;
+    document.documentElement.scrollLeft = left;
+    document.body.parentNode.scrollLeft = left;
+    document.body.scrollLeft = left;
+  }
+  function position() {
+    const _top = document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
+    const _left = document.documentElement.scrollLeft || document.body.parentNode.scrollLeft || document.body.scrollLeft;
+    return { top: _top, left: _left };
+  }
+  const startTop = position().top;
+  const changeTop = _top - startTop;
+  const startLeft = position().left;
+  const changeLeft = _left - startLeft;
+  let currentTime = 0;
+  const increment = 20;
+  const _duration = typeof duration === 'undefined' ? 500 : duration;
+  const animateScroll = function () {
+    // increment the time
+    currentTime += increment;
+    // find the value with the quadratic in-out easing function
+    const top = Math.easeInOutQuad(currentTime, startTop, changeTop, _duration);
+    const left = Math.easeInOutQuad(currentTime, startLeft, changeLeft, _duration);
+    // move the document.body
+    move(top, left);
+    // do the animation unless its over
+    if (currentTime < _duration) {
+      requestAnimFrame(animateScroll);
+    } else {
+      if (callback && typeof callback === 'function') {
+        // the animation is done so lets callback
+        callback();
+      }
+    }
+  };
+  animateScroll();
+}

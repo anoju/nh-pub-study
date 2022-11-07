@@ -39,15 +39,29 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
-      // 스크립트 작성이 여기에
-      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-      $('.btn-scroll').click(function () {
-        // const $sclT = $(window).scrollTop();
-        const sclVal = parseInt($('.scroll-val').val());
-        $('html, body')
-          .stop()
-          .animate({ scrollTop: '+=' + sclVal }, 300);
-      });
+      function jqScroll() {
+        $('.btn-scroll').click(function () {
+          // const $sclT = $(window).scrollTop();
+          const sclVal = parseInt($('.scroll-val').val());
+          $('html, body')
+            .stop()
+            .animate({ scrollTop: '+=' + sclVal }, 300);
+        });
+      }
+      // jqScroll();
+
+      function jsScroll() {
+        function scrollMove(e) {
+          e.preventDefault();
+          let _sclTop = window.pageYOffset;
+          const _inp = document.querySelector('.input input');
+          const _inpVal = parseInt(_inp.value);
+          _sclTop += _inpVal;
+          window.scrollTo({ top: _sclTop, behavior: 'smooth' });
+        }
+        document.querySelector('.btn-scroll').addEventListener('click', scrollMove);
+      }
+      jsScroll();
     </script>
   </body>
 </html>
