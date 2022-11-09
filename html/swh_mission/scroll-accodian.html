@@ -72,46 +72,6 @@
                 내용<br />
                 내용<br />
                 내용<br />
-
-                내용<br />
-              </div>
-            </li>
-            <li>
-              <div class="folding-head">
-                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
-              </div>
-              <div class="folding-panel">
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
                 내용<br />
                 내용<br />
                 내용<br />
@@ -171,43 +131,6 @@
                 내용<br />
                 내용<br />
                 내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
-                내용<br />
               </div>
             </li>
             <li>
@@ -244,6 +167,13 @@
                 내용<br />
                 내용<br />
                 내용<br />
+              </div>
+            </li>
+            <li>
+              <div class="folding-head">
+                <a href="#" class="folding-btn">제목제목 제목제목 제목제목 제목제목</a>
+              </div>
+              <div class="folding-panel">
                 내용<br />
                 내용<br />
                 내용<br />
@@ -301,13 +231,18 @@
               .slideDown(300, function () {
                 var $liHeight = $(this).closest('li').outerHeight(true);
                 var $offsetTop = $(this).closest('li').offset().top;
-                var $sum = $liHeight + $offsetTop;
-
-                $(this).closest('li').get(0).scrollIntoView(true);
-                //$('li').animate({ top: '40' }, 'slow');
-                console.log($offsetTop, 'offset top 높이');
-                console.log($liHeight, 'li 슬라이드다운 높이');
-                console.log($sum, '2개 높이');
+                var $panel = $(this).closest('li').find('.folding-panel').outerHeight();
+                var $btnTop = $(this).offset().top;
+                var $windHeight = window.height;
+                //$(this).closest('li').get(0).scrollIntoView(true);
+                if ($(window.height < $liHeight)) {
+                  window.scrollTo({ top: $windHeight + $liHeight, behavior: 'smooth' });
+                }
+                $btnTop;
+                console.log($liHeight, 'li 높이');
+                console.log($offsetTop, 'li의 offset top');
+                console.log($(document).height(), '문서 전체 높이');
+                console.log($panel, '내용만 높이');
               });
             // 어렵다.
           }

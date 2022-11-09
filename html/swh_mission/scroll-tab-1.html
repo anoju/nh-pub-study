@@ -7,6 +7,9 @@
     <title>테스트</title>
     <link href="../../css/front.min.css" rel="stylesheet" />
     <style>
+      .tab-list li a:hover {
+        color: black;
+      }
       .box {
         height: 100vh;
       }
@@ -45,13 +48,13 @@
           <div class="tab-inner">
             <i class="tab-line" aria-hidden="true"></i>
             <ul class="tab-list">
-              <li class="tab"><a href="#">red</a></li>
-              <li class="tab"><a href="#">orange</a></li>
-              <li class="tab"><a href="#">yellow</a></li>
-              <li class="tab"><a href="#">green</a></li>
-              <li class="tab"><a href="#">blue</a></li>
-              <li class="tab"><a href="#">darkblue</a></li>
-              <li class="tab"><a href="#">purple</a></li>
+              <li class="tab"><a href="#1">red</a></li>
+              <li class="tab"><a href="#2">orange</a></li>
+              <li class="tab"><a href="#3">yellow</a></li>
+              <li class="tab"><a href="#4">green</a></li>
+              <li class="tab"><a href="#5">blue</a></li>
+              <li class="tab"><a href="#6">darkblue</a></li>
+              <li class="tab"><a href="#7">purple</a></li>
             </ul>
           </div>
         </div>
@@ -62,22 +65,42 @@
           </ul>
           <br />
           <div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+            <div class="box red"></div>
+            <div class="box orange"></div>
+            <div class="box yellow"></div>
+            <div class="box green"></div>
+            <div class="box blue"></div>
+            <div class="box darkblue"></div>
+            <div class="box purple"></div>
           </div>
         </div>
       </div>
     </div>
-
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+
+      function scroll_tab() {
+        $('.tab-line-menu a').click(function (e) {
+          e.preventDefault();
+          console.log($('.page-head').outerHeight());
+          const $index = $(this).closest('.tab').index();
+          const $cont = $('.box').eq($index);
+          const $conTop = $cont.offset().top;
+          const $headHeight = $('.page-head').outerHeight();
+          const $navHeight = $('.tab-fixed').outerHeight();
+          const $sum = $conTop.toFixed() - $headHeight - $navHeight;
+          $('html, body').stop().animate({ scrollTop: $sum }, 300);
+        });
+      }
+      scroll_tab();
+
+      //scrolltab_js();
+      /*메뉴를 클릭하면 html, body의 scrollTop(스크롤바의 수직 위치값)이
+      $(this.hash) -> (클릭한 해당 a링크의 hash값, 즉 이동할 div#menu를 의미)
+      의 top 좌표로 이동함*/
     </script>
   </body>
 </html>

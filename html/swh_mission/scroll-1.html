@@ -44,11 +44,11 @@
 
       document.querySelector('.btn-wrap').addEventListener('click', function (e) {
         const bottom = document.querySelector('.gray');
-        const top = document.querySelector('.primary');
+        const btntop = document.querySelector('.primary');
         const end = document.querySelector('html').scrollHeight;
         if (e.target == bottom) {
           window.scrollTo({ top: end, behavior: 'smooth' });
-        } else if (e.target == top) {
+        } else if (e.target == btntop) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           null;

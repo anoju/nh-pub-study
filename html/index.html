@@ -5,17 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .son {
+        width: 300px;
+        height: 300px;
+        background: #000;
+        margin: 20px auto;
+      }
+      button {
+        position: fixed;
+      }
+    </style>
   </head>
   <body>
-    <!-- 1 -->
-    <h1>박하늬</h1>
-    <!-- 2 -->
-    <h2>손우헌</h2>
-    <!-- 3 -->
-    <h1>임재진</h1>
-    <!-- 4 -->
-    <span>텍스트</span>
-    <!-- 5 -->
-    <h1>화이팅</h1>
+    <button>버튼1</button>
+    <button>버튼2</button>
+    <button>버튼3</button>
+    <button>버튼4</button>
+    <button>버튼5</button>
+    <button>버튼6</button>
+    <button>버튼7</button>
+    <div class="son son1">1</div>
+    <div class="son son2">2</div>
+    <div class="son son3">3</div>
+    <div class="son son4">4</div>
+    <div class="son son5">5</div>
+    <div class="son son6">6</div>
+    <div class="son son7">7</div>
+    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+      var $scrollIntoView = document.querySelector('son7');
+      $('button').click(function (e) {
+        //$('html').animate({ scrollTop: 0 }, 'slow');
+        $('.son3').get(0).scrollIntoView(true);
+      });
+
+      //text = '너비:' + $('.son').width() + 'px, 높이:' + $('.son').height() + 'px - 요소의 크기<br/>';
+      //text += '너비:' + $('.son').innerWidth() + 'px, 높이:' + $('.son').innerHeight() + 'px - 요소의 크기 + 패딩<br/>';
+      //text += '너비:' + $('.son').outerWidth() + 'px, 높이:' + $('.son').outerHeight() + 'px - 요소의 크기 + 패딩 + 테두리<br/>';
+      var text = '너비:' + $('.son').outerWidth(true) + 'px, 높이:' + $('.son').outerHeight(true) + 'px - 요소의 크기 + 패딩 + 테두리 + 마진<br/>';
+      console.log(text);
+    </script>
   </body>
 </html>
