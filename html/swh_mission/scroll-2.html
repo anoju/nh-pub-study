@@ -39,19 +39,29 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script>
-      // 스크립트 작성이 여기에
       // scrollTo = 현재 윈도우 스크롤 탑값 + input값을 더한거
 
       document.querySelector('.button').addEventListener('click', function (e) {
-        const $input = document.querySelector('.input input').value;
-        const end = document.querySelector('html').scrollHeight;
-        const nowscroll = window.offsetTop;
-        if (end > $input) {
-          window.scrollTo({ top: '+=' + $input, behavior: 'smooth' });
-        }
+        let $scrollY = window.scrollY;
+        const $input = document.querySelector('.input input');
+        const $inputval = parseInt($input.value);
+        $scrollY += $inputval;
+        window.scrollTo({ top: $scrollY, behavior: 'smooth' });
       });
-      //window.scrollBy() 메서드는 선택한 요소에 스크롤 값(상대 위치)을 설정합니다.
-      //window.scrollTo() 메서드는 선택한 요소에 스크롤 값(절대 위치)을 설정합니다.
+      /*document.querySelector('.button').addEventListener('click', function (e) {
+        e.preventDefault();
+        let $scrollY = window.scrollY;
+        const $input = document.querySelector('.input input').value.parseInt();
+        $scrollY += $input;
+        window.scrollTo({ top: $scrollY, behavior: 'smooth' });
+      });*/
+
+      /* 메모 
+      parseInt() 함수는 문자열 인자를 파싱하여 특정 진수 값의 정수를 반환합니다.
+      pageYOffset , scrollY  수직으로 얼마나 스크롤 됐는지
+      window.scrollBy() 메서드는 선택한 요소에 스크롤 값(상대 위치)을 설정합니다.
+      window.scrollTo() 메서드는 선택한 요소에 스크롤 값(절대 위치)을 설정합니다.
+      */
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
     </script>
   </body>
