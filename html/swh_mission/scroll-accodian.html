@@ -229,26 +229,23 @@
               .next('.folding-panel')
               .stop()
               .slideDown(300, function () {
-                var $liHeight = $(this).closest('li').outerHeight(true);
-                var $offsetTop = $(this).closest('li').offset().top;
-                var $panel = $(this).closest('li').find('.folding-panel').outerHeight();
-                var $btnTop = $(this).offset().top;
-                var $windHeight = window.height;
-                //$(this).closest('li').get(0).scrollIntoView(true);
-                if ($(window.height < $liHeight)) {
-                  window.scrollTo({ top: $windHeight + $liHeight, behavior: 'smooth' });
-                }
-                $btnTop;
-                console.log($liHeight, 'li 높이');
-                console.log($offsetTop, 'li의 offset top');
-                console.log($(document).height(), '문서 전체 높이');
-                console.log($panel, '내용만 높이');
+                let $offsetTop = $(this).closest('li').offset().top;
+                const $liHeight = $(this).closest('li').outerHeight();
+                const $panel = $(this).closest('li').find('.folding-panel').outerHeight();
+                const $windHeight = $(window).height();
+                const $head = $('.page-head').outerHeight();
+                const $menu = $('.tab-fixed').outerHeight();
+                $offsetTop = $offsetTop - $head - $menu;
+                $('html, body').stop().animate({ scrollTop: $offsetTop }, 300);
+                //window.scrollTo({ top: $windHeight + $liHeight, behavior: 'smooth' });
               });
-            // 어렵다.
           }
         });
       }
       accordion();
+      // 어렵다. 매우..
+      // 해당 li offset탑값 빼기 ul 위에 요소들 outerHeight 값들을 빼준다.
+      // 변수에 해당 li offset탑값 + li 높이값 - 현재페이지 높이(브라우저높이)
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
     </script>
   </body>
