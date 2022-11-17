@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <style>
+      .img__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 16px;
+      }
+      .img-box {
+        border: 1px solid #ddd;
+        background: #f1f1f1;
+      }
+      .space {
+        background: #fdfdfd;
+        height: 60vh;
+      }
+      .img__clone {
+        position: fixed;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <h1>장바구니 담기 효과</h1>
+          <div class="head-right">
+            <button class="button">장바구니</button>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="section">
+          <div class="space"></div>
+          <ul class="img__grid">
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp2.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp3.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp4.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp4-2.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp4-3.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp5.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+            <li>
+              <div class="img-box contain"><img src="../../images/thumb-temp5-2.jpg" alt="" /></div>
+              <p class="t-center mt-5"><button class="button line h24">담기</button></p>
+            </li>
+          </ul>
+          <div class="space"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
+    <script>
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+
+      function getRenderedSize(contains, cWidth, cHeight, width, height, pos) {
+        var oRatio = width / height,
+          cRatio = cWidth / cHeight;
+        return function () {
+          if (contains ? oRatio > cRatio : oRatio < cRatio) {
+            this.width = cWidth;
+            this.height = cWidth / oRatio;
+          } else {
+            this.width = cHeight * oRatio;
+            this.height = cHeight;
+          }
+          this.left = (cWidth - this.width) * (pos / 100);
+          this.right = this.width + this.left;
+          this.top = (cHeight - this.height) * (pos / 100);
+          this.bottom = this.height + this.top;
+          return this;
+        }.call({});
+      }
+
+      function getImgSizeInfo(img) {
+        var pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
+        return getRenderedSize(true, img.width, img.height, img.naturalWidth, img.naturalHeight, parseInt(pos[0]));
+      }
+
+      function insertCart() {
+        const $speed = 500;
+        const $ease = 'easeInQuart';
+        $('.img__grid .button').click(function () {
+          const $this = $(this);
+          const $li = $this.closest('li');
+          const $img = $li.find('.img-box img');
+
+          // img에 object-fit이 적용되어
+          // const $imgW = $img.outerWidth();
+          // const $imgL = $img.offset().left;
+          // const $imgT = $img.offset().top;
+          const $imgW = getImgSizeInfo($img[0]).width;
+          const $imgL = $img.offset().left + getImgSizeInfo($img[0]).left;
+          const $imgT = $img.offset().top + getImgSizeInfo($img[0]).top;
+
+          const $cart = $('.head-right .button');
+          const $cartW = $cart.outerWidth();
+          const $cartH = $cart.outerHeight();
+          const $cartL = $cart.offset().left;
+          const $cartT = $cart.offset().top;
+          const $clone = $img.clone();
+          $clone.addClass('img__clone').css({
+            width: $imgW,
+            left: $imgL - $(window).scrollLeft(),
+            top: $imgT - $(window).scrollTop()
+          });
+          $('body').append($clone);
+          $img.css('opacity', 0).animate(
+            {
+              opacity: 1
+            },
+            $speed * 3,
+            $ease,
+            function () {
+              $img.css('opacity', '');
+            }
+          );
+          $clone.animate(
+            {
+              // width: 0,
+              // left: $cartL - $(window).scrollLeft() + $cartW / 2,
+              // top: $cartT - $(window).scrollTop() + $cartH / 2
+              width: 20,
+              left: $cartL - $(window).scrollLeft() + $cartW - 20,
+              top: $cartT - $(window).scrollTop()
+            },
+            $speed,
+            $ease,
+            function () {
+              $clone.remove();
+            }
+          );
+        });
+      }
+      insertCart();
+    </script>
+  </body>
+</html>
