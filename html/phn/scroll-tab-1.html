@@ -62,10 +62,10 @@
           </ul>
           <br />
           <div>
-            <div class="box" id="red"></div>
-            <div class="box" id="orange"></div>
-            <div class="box" id="yellow"></div>
-            <div class="box" id="green"></div>
+            <div class="box" id="red">가나다라</div>
+            <div class="box" id="orange">가나다라</div>
+            <div class="box" id="yellow">가나다라</div>
+            <div class="box" id="green">가나다라</div>
             <div class="box" id="blue"></div>
             <div class="box" id="darkblue"></div>
             <div class="box" id="purple"></div>
@@ -81,22 +81,24 @@
 
       $('.tab a').on('click', function () {
         const $href = $(this).attr('href');
+        const $top = $($href).offset().top - $('.page-head').outerHeight() - $('.tab-line-menu').outerHeight();
+        $('html, body').animate({ scrollTop: $top });
 
-        if ($href == '#red') {
-          $('html, body').animate({ scrollTop: $('#red').offset().top });
-        } else if ($href == '#orange') {
-          $('html, body').animate({ scrollTop: $('#orange').offset().top });
-        } else if ($href == '#yellow') {
-          $('html, body').animate({ scrollTop: $('#yellow').offset().top });
-        } else if ($href == '#green') {
-          $('html, body').animate({ scrollTop: $('#green').offset().top });
-        } else if ($href == '#blue') {
-          $('html, body').animate({ scrollTop: $('#blue').offset().top });
-        } else if ($href == '#darkblue') {
-          $('html, body').animate({ scrollTop: $('#darkblue').offset().top });
-        } else if ($href == '#purple') {
-          $('html, body').animate({ scrollTop: $('#purple').offset().top });
-        }
+        // if ($href == '#red') {
+        //   $('html, body').animate({ scrollTop: $('#red').offset().top });
+        // } else if ($href == '#orange') {
+        //   $('html, body').animate({ scrollTop: $('#orange').offset().top });
+        // } else if ($href == '#yellow') {
+        //   $('html, body').animate({ scrollTop: $('#yellow').offset().top });
+        // } else if ($href == '#green') {
+        //   $('html, body').animate({ scrollTop: $('#green').offset().top });
+        // } else if ($href == '#blue') {
+        //   $('html, body').animate({ scrollTop: $('#blue').offset().top });
+        // } else if ($href == '#darkblue') {
+        //   $('html, body').animate({ scrollTop: $('#darkblue').offset().top });
+        // } else if ($href == '#purple') {
+        //   $('html, body').animate({ scrollTop: $('#purple').offset().top });
+        // }
       });
     </script>
   </body>
