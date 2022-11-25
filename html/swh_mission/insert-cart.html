@@ -25,6 +25,10 @@
         z-index: 999;
       }
       .img-area img:not(.img-area img:nth-of-type(1)) {
+        /* width: 100px !important;
+ */ /* height: 100px !important; */
+      }
+      .img__clone_after {
         position: absolute;
         top: 0;
         left: 0;
@@ -37,7 +41,7 @@
         <div>
           <h1>장바구니 담기 효과</h1>
           <div class="head-right">
-            <button class="button">장바구니</button>
+            <button class="button shopping_basket">장바구니</button>
           </div>
         </div>
       </div>
@@ -66,7 +70,7 @@
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp4-3.jpg" alt="" /></div>
+              <div class="img-area"><img src="../../images/thumb-temp4-3.jpg" alt="" id="imgg" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
@@ -78,6 +82,7 @@
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
           </ul>
+          <div id="div1">asd</div>
           <div class="space"></div>
         </div>
       </div>
@@ -87,21 +92,44 @@
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
+
+      // var $scrollY = document.querySelector('html').scrollTop; 앞에서 얼마나
+
       const $btn = document.querySelector('.img__grid');
       $btn.addEventListener('click', function (e) {
         e.preventDefault();
         var $cloneBtn = document.querySelectorAll('.img__grid .button');
         $cloneBtn.forEach(function (i, a) {
-          var $clone = document.getElementsByClassName('img-area')[a].firstElementChild.cloneNode(true);
+          var $clone = document.getElementsByClassName('img-area')[a].firstElementChild.cloneNode(true); // 복제
+          var $imgTop = document.querySelectorAll('.img-area')[a].offsetTop;
+          var $imgLeft = document.querySelectorAll('.img-area')[a].offsetLeft;
+          var $imgWidth = document.getElementsByClassName('img-area')[a].firstElementChild.scrollWidth;
+          var $imgwHeight = document.getElementsByClassName('img-area')[a].firstElementChild.scrollHeight;
+          var resizeWidth;
+          var resizeHeight;
+          // 이미지 비율 구하기
+          //var basisRatio = $imgWidth / $imgwHeight;
+          //var imgRatio = height / width;
+
           if (e.target == $cloneBtn[a]) {
-            var $cloneEl = $cloneBtn[a].parentElement.parentElement.firstElementChild.appendChild($clone);
+            $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.opacity = '0';
+            var $cloneEl = $cloneBtn[a].parentElement.parentElement.firstElementChild.appendChild($clone); // 복제한 이미지 넣기
+            $cloneEl.classList.add('img__clone_after');
+
+            if ($cloneEl.classList == 'img__clone_after') {
+              console.log($cloneEl.scrollWidth);
+              $cloneEl.style.width = $imgWidth + 'px';
+              $cloneEl.style.height = $imgwHeight + 'px';
+              console.log('1');
+            }
+            $cloneEl.classList.add('img__clone');
             setTimeout(function () {
-              $cloneEl.style.display = 'none';
-            }, 2000);
+              $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.cssText = 'opacity:1; transition: 1s;';
+              $cloneBtn[a].parentElement.parentElement.firstElementChild.removeChild($cloneEl); //복제한 이미지 사라짐
+            }, 100000);
           }
         });
       });
-      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
     </script>
   </body>
 </html>
