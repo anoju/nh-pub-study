@@ -24,14 +24,11 @@
         position: fixed;
         z-index: 999;
       }
-      .img-area img:not(.img-area img:nth-of-type(1)) {
-        /* width: 100px !important;
- */ /* height: 100px !important; */
+      .img-area1 {
+        position: relative;
       }
-      .img__clone_after {
-        position: absolute;
-        top: 0;
-        left: 0;
+      .img-area1 img {
+        max-width: 100%;
       }
     </style>
   </head>
@@ -50,35 +47,35 @@
           <div class="space"></div>
           <ul class="img__grid">
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp2.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp2.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp3.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp3.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp4.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp4.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp4-2.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp4-2.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp4-3.jpg" alt="" id="imgg" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp4-3.jpg" alt="" id="imgg" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp5.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp5.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
-              <div class="img-area"><img src="../../images/thumb-temp5-2.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp5-2.jpg" alt="" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
           </ul>
@@ -87,9 +84,30 @@
         </div>
       </div>
     </div>
-
+    <div class="line">
+      <!-- 움직일 사각형들 -->
+      <div class="square yellow"></div>
+    </div>
+    <div class="controls">
+      <!-- 사각형 애니메이션 컨트롤 버튼 -->
+      <button class="play-yellow">Animate left yellow</button>
+    </div>
+    <style>
+      .square {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        background-color: cornflowerblue;
+        margin: 4px;
+        display: inline-block;
+      }
+      .yellow {
+        background: yellow;
+      }
+    </style>
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
 
@@ -99,14 +117,29 @@
       $btn.addEventListener('click', function (e) {
         e.preventDefault();
         var $cloneBtn = document.querySelectorAll('.img__grid .button');
-        $cloneBtn.forEach(function (i, a) {
-          var $clone = document.getElementsByClassName('img-area')[a].firstElementChild.cloneNode(true); // 복제
-          var $imgTop = document.querySelectorAll('.img-area')[a].offsetTop;
-          var $imgLeft = document.querySelectorAll('.img-area')[a].offsetLeft;
-          var $imgWidth = document.getElementsByClassName('img-area')[a].firstElementChild.scrollWidth;
-          var $imgwHeight = document.getElementsByClassName('img-area')[a].firstElementChild.scrollHeight;
+        $cloneBtn.forEach(function (x, a) {
+          var $head = document.querySelector('.page-head').clientHeight;
+          var $space = document.querySelector('.space').clientHeight;
+          var $btn = document.querySelector('.mt-5 button').clientHeight;
+          var $clone = document.getElementsByClassName('img-area1')[a].firstElementChild.cloneNode(true); // 복제
+          var $imgTop = document.querySelectorAll('.img-area1')[a].offsetTop;
+          var $imgLeft = document.querySelectorAll('.img-area1')[a].offsetLeft;
+          var $imgWidth = document.getElementsByClassName('img-area1')[a].firstElementChild.clientWidth;
+          var $imgwHeight = document.getElementsByClassName('img-area1')[a].firstElementChild.clientHeight;
+          var $li = document.getElementsByClassName('img-area1')[a].parentElement.clientHeight;
           var resizeWidth;
           var resizeHeight;
+          function ImgMove(i) {
+            var $ImgMove = anime({
+              targets: i,
+              top: 0,
+              right: 0,
+              duration: 1000,
+              easing: 'easeInOutQuad',
+              autoplay: true
+            });
+            $cloneBtn[a].onclick = $ImgMove.restart;
+          }
           // 이미지 비율 구하기
           //var basisRatio = $imgWidth / $imgwHeight;
           //var imgRatio = height / width;
@@ -114,19 +147,25 @@
           if (e.target == $cloneBtn[a]) {
             $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.opacity = '0';
             var $cloneEl = $cloneBtn[a].parentElement.parentElement.firstElementChild.appendChild($clone); // 복제한 이미지 넣기
-            $cloneEl.classList.add('img__clone_after');
-
-            if ($cloneEl.classList == 'img__clone_after') {
-              console.log($cloneEl.scrollWidth);
-              $cloneEl.style.width = $imgWidth + 'px';
-              $cloneEl.style.height = $imgwHeight + 'px';
-              console.log('1');
-            }
             $cloneEl.classList.add('img__clone');
+            $cloneEl.style.top = $head + $space + $btn + 'px';
+            //$cloneEl.style.left = $imgLeft + 'px';
+            console.log($li, 'li  clientHeight');
+            console.log($imgTop, 'img-area1 oftop');
+            console.log($imgLeft, 'img-area1 ofleft');
+            console.log($head, 'head');
+            console.log($space, 'space');
+            console.log(window.scrollY, 'window.scrollY');
+            console.log($cloneBtn[a].parentElement.parentElement.firstElementChild.offsetTop, '$cloneEl');
+
+            $cloneEl.style.width = $imgWidth + 'px';
+            $cloneEl.style.height = $imgwHeight + 'px';
+            ImgMove($cloneEl);
+
             setTimeout(function () {
-              $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.cssText = 'opacity:1; transition: 1s;';
+              $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.cssText = 'opacity:1';
               $cloneBtn[a].parentElement.parentElement.firstElementChild.removeChild($cloneEl); //복제한 이미지 사라짐
-            }, 100000);
+            }, 1000);
           }
         });
       });
