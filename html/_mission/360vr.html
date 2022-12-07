@@ -8,10 +8,25 @@
     <link href="../../css/front.min.css" rel="stylesheet" />
     <style>
       .range-slider .thumb {
+        display: none;
         transition-duration: 0.1s;
       }
       .range-slider input[type='range'] {
         opacity: 1;
+        background: none;
+      }
+      .range-slider input[type='range'] {
+        opacity: 1;
+        background: none;
+      }
+      .range-slider input[type='range']::-ms-thumb {
+        border-radius: 50%;
+      }
+      .range-slider input[type='range']::-moz-range-thumb {
+        border-radius: 50%;
+      }
+      .range-slider input[type='range']::-webkit-slider-thumb {
+        border-radius: 50%;
       }
     </style>
   </head>
