@@ -7,8 +7,14 @@
     <title>테스트</title>
     <link href="../../css/front.min.css" rel="stylesheet" />
     <style>
+      .range-slider {
+        padding-top: 0;
+      }
       .range-slider .thumb {
         transition-duration: 0.1s;
+      }
+      .pre-img-wrap {
+        display: none;
       }
     </style>
   </head>
@@ -21,13 +27,13 @@
       </div>
       <div class="page-body">
         <div class="section">
-          <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
           <div class="range-slider">
+            <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
             <div class="range-wrap">
               <div class="range"><i></i></div>
               <div class="thumb"></div>
-              <input type="range" min="1" max="61" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
             </div>
+            <input type="range" min="1" max="61" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
           </div>
         </div>
       </div>
@@ -46,20 +52,35 @@
       let $imgFile = '';
       const $rangeInput = document.querySelector('.range-slider input');
       const $rangeThumb = document.querySelector('.range-slider .thumb');
-      const $rangeMin = $rangeInput.min;
-      const $rangeMax = $rangeInput.max;
-      console.log($rangeMax);
+      const $rangeMin = parseInt($rangeInput.min);
+      const $rangeMax = parseInt($rangeInput.max);
 
       function vrImgChange(imgIdx) {
         if ($imgIdx === imgIdx) return;
-        let $idx = '' + ($rangeMax - imgIdx + 1);
+        const $idx = vrImgFile(imgIdx);
+        $imgSrc = $imgPath + $idx + $imgFile;
+        $img.src = $imgSrc;
+      }
+      function vrImgFile(idx) {
+        let $idx = '' + ($rangeMax - idx + 1);
         if ($idx.length == 1) {
           $idx = '00' + $idx;
         } else if ($idx.length == 2) {
           $idx = '0' + $idx;
         }
-        $imgSrc = $imgPath + $idx + $imgFile;
-        $img.src = $imgSrc;
+        return $idx;
+      }
+      function vrImgPreload() {
+        const $preWrap = document.createElement('div');
+        $preWrap.classList.add('pre-img-wrap');
+        // $preWrap.setAttribute('style', 'display:none;');
+        let $html = '';
+        for (let i = $rangeMin; i <= $rangeMax; i += 1) {
+          const $idx = vrImgFile(i);
+          $html += '<img src="' + $imgPath + $idx + $imgFile + '" />';
+        }
+        $preWrap.innerHTML = $html;
+        document.body.appendChild($preWrap);
       }
       function vrImgReady() {
         const $srcAry = $img.src.split('/');
@@ -73,13 +94,14 @@
       }
       function rangeChange(element) {
         const $el = element;
-        const $val = $el.value;
-        const $leftPercent = (100 / (parseInt($rangeMax) - parseInt($rangeMin))) * parseInt($val) - (100 / (parseInt($rangeMax) - parseInt($rangeMin))) * parseInt($rangeMin);
+        const $val = parseInt($el.value);
+        const $leftPercent = (100 / ($rangeMax - $rangeMin)) * $val - (100 / ($rangeMax - $rangeMin)) * $rangeMin;
         $rangeThumb.style.left = $leftPercent + '%';
         vrImgChange($val);
       }
       function vrReady() {
         vrImgReady();
+        vrImgPreload();
         rangeChange($rangeInput);
       }
       vrReady();
