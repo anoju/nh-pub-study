@@ -25,6 +25,10 @@
       .range-slider .thumb {
         transition-duration: 0.1s;
       }
+      .range-slider input[type='range']:focus ~ .thumb {
+        background-color: #00b6b6;
+        transform: scale(1.1);
+      }
       .pre-img-wrap {
         display: none;
       }
@@ -42,9 +46,9 @@
           <div class="range-slider">
             <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
             <div class="range-wrap">
+              <input type="range" min="1" max="61" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
               <div class="range"><i></i></div>
               <div class="thumb"></div>
-              <input type="range" min="1" max="61" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
             </div>
           </div>
           <br />
