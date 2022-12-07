@@ -44,7 +44,7 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
-      const $imgArea = document.querySelector('.img-area');
+      const $imgArea = document.querySelector('.range-slider .img-area');
       const $img = $imgArea.querySelector('img');
       let $imgSrc = $img.src;
       let $imgPath = '';
@@ -56,19 +56,22 @@
       const $rangeMax = parseInt($rangeInput.max);
 
       function vrImgChange(imgIdx) {
-        if ($imgIdx === imgIdx) return;
-        const $idx = vrImgFile(imgIdx);
-        $imgSrc = $imgPath + $idx + $imgFile;
-        $img.src = $imgSrc;
+        let $idx = imgIdx;
+        if ($imgIdx === $idx) return;
+        if ($idx < $rangeMin) $idx = $rangeMax;
+        else if ($idx > $rangeMax) $idx = $rangeMin;
+        $imgIdx = $idx;
+        $img.src = vrImgSrc($idx);
       }
-      function vrImgFile(idx) {
-        let $idx = '' + ($rangeMax - idx + 1);
+      function vrImgSrc(index) {
+        let $idx = '' + ($rangeMax - index + 1);
         if ($idx.length == 1) {
           $idx = '00' + $idx;
         } else if ($idx.length == 2) {
           $idx = '0' + $idx;
         }
-        return $idx;
+        const $src = $imgPath + $idx + $imgFile;
+        return $src;
       }
       function vrImgPreload() {
         const $preWrap = document.createElement('div');
@@ -76,8 +79,8 @@
         // $preWrap.setAttribute('style', 'display:none;');
         let $html = '';
         for (let i = $rangeMin; i <= $rangeMax; i += 1) {
-          const $idx = vrImgFile(i);
-          $html += '<img src="' + $imgPath + $idx + $imgFile + '" />';
+          const $src = vrImgSrc(i);
+          $html += '<img src="' + $src + '" />';
         }
         $preWrap.innerHTML = $html;
         document.body.appendChild($preWrap);
@@ -104,7 +107,53 @@
         vrImgPreload();
         rangeChange($rangeInput);
       }
+
+      let vrTocuhStartPos;
+      let vrTocuhInputVal;
+      let vrTocuhing = false;
+      function vrTouchStart(e) {
+        if (e.type == 'touchstart') {
+          vrTocuhStartPos = e.touches[0].pageX;
+        } else {
+          vrTocuhStartPos = e.pageX;
+        }
+        vrTocuhing = true;
+        vrTocuhInputVal = parseInt($rangeInput.value);
+      }
+      function vrTouchMove(e) {
+        if (!vrTocuhing) return;
+        const $target = e.target;
+        // console.log($target, $target !== $imgArea, !$target.closest('.img-area'));
+        // if ($target !== $imgArea && !$target.closest('.img-area')) {
+        //   vrTocuhing = false;
+        //   return;
+        // }
+        let pageX;
+        if (e.type == 'touchmove') {
+          pageX = e.targetTouches[0].pageX;
+        } else {
+          pageX = e.pageX;
+        }
+        const $stepWidth = $imgArea.offsetWidth / $rangeMax;
+        const $move = pageX - vrTocuhStartPos;
+        const $stepVal = Math.round($move / $stepWidth);
+        const $stepMove = $stepVal % $rangeMax;
+        let $val = vrTocuhInputVal + $stepMove;
+
+        if ($val < $rangeMin) $val = $rangeMin;
+        else if ($val > $rangeMax || $stepVal / $rangeMax > 1) $val = $rangeMax;
+
+        $rangeInput.value = $val;
+        $rangeInput.dispatchEvent(new Event('input'));
+      }
+      function vrTouchEnd(e) {
+        if (!vrTocuhing) vrTocuhing = false;
+      }
+
       vrReady();
+      $imgArea.addEventListener('touchstart', vrTouchStart);
+      $imgArea.addEventListener('touchmove', vrTouchMove);
+      document.addEventListener('touchend', vrTouchEnd);
     </script>
   </body>
 </html>
