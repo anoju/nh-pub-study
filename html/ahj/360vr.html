@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <style>
+      .range-slider {
+        padding-top: 0;
+      }
+      .range-slider .img-area {
+        cursor: move;
+        user-select: none;
+      }
+      .range-slider .img-area:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .range-slider .thumb {
+        transition-duration: 0.1s;
+      }
+      .range-slider input[type='range']:focus ~ .thumb {
+        background-color: #00b6b6;
+        transform: scale(1.1);
+      }
+      .pre-img-wrap {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <h1>360 VR</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="section">
+          <div class="range-slider">
+            <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
+            <div class="range-wrap">
+              <input type="range" min="1" max="61" step="1" value="1" />
+              <div class="range"><i></i></div>
+              <div class="thumb"></div>
+            </div>
+          </div>
+          <br />
+          <br />
+          <p class="t-center break-all">이미지출처 : <a href="https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro" target="_blank" class="underline">https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
+    <script>
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      const $imgArea = document.querySelector('.range-slider .img-area');
+      const $img = $imgArea.querySelector('img');
+      let $imgSrc = $img.src;
+      let $imgPath = '';
+      let $imgIdx = 0;
+      let $imgFile = '';
+      const $rangeInput = document.querySelector('.range-slider input');
+      const $rangeThumb = document.querySelector('.range-slider .thumb');
+      const $rangeMin = parseInt($rangeInput.min);
+      const $rangeMax = parseInt($rangeInput.max);
+
+      function vrImgChange(imgIdx) {
+        let $idx = imgIdx;
+        if ($imgIdx === $idx) return;
+        if ($idx < $rangeMin) $idx = $rangeMax;
+        else if ($idx > $rangeMax) $idx = $rangeMin;
+        $imgIdx = $idx;
+        $img.src = vrImgSrc($idx);
+      }
+      function vrImgSrc(index) {
+        let $idx = '' + ($rangeMax - index + 1);
+        if ($idx.length == 1) {
+          $idx = '00' + $idx;
+        } else if ($idx.length == 2) {
+          $idx = '0' + $idx;
+        }
+        const $src = $imgPath + $idx + $imgFile;
+        return $src;
+      }
+      function vrImgPreload() {
+        const $preWrap = document.createElement('div');
+        $preWrap.classList.add('pre-img-wrap');
+        // $preWrap.setAttribute('style', 'display:none;');
+        let $html = '';
+        for (let i = $rangeMin; i <= $rangeMax; i += 1) {
+          const $src = vrImgSrc(i);
+          $html += '<img src="' + $src + '" />';
+        }
+        $preWrap.innerHTML = $html;
+        document.body.appendChild($preWrap);
+      }
+      function vrImgReady() {
+        const $srcAry = $img.src.split('/');
+        const $last = $srcAry.pop();
+        const $src = $srcAry.join('/') + '/';
+        const $idx = parseInt($last.split('.').shift());
+        const $file = '.' + $last.split('.').pop();
+        $imgPath = $src;
+        $imgIdx = $idx;
+        $imgFile = $file;
+      }
+      function rangeChange(e) {
+        const $el = e.type === 'range' ? e : e.target;
+        const $val = parseInt($el.value);
+        const $leftPercent = (100 / ($rangeMax - $rangeMin)) * $val - (100 / ($rangeMax - $rangeMin)) * $rangeMin;
+        $rangeThumb.style.left = $leftPercent + '%';
+        vrImgChange($val);
+      }
+      function vrReady() {
+        vrImgReady();
+        vrImgPreload();
+        rangeChange($rangeInput);
+      }
+
+      let vrTocuhStartPos;
+      let vrTocuhInputVal;
+      let vrTocuhElement;
+      let vrTocuhing = false;
+      function vrTouchStart(e) {
+        if (e.type == 'touchstart') {
+          const $touch = e.touches[0];
+          vrTocuhStartPos = $touch.pageX;
+          vrTocuhElement = document.elementFromPoint($touch.pageX, $touch.pageY);
+        } else {
+          vrTocuhStartPos = e.pageX;
+        }
+        vrTocuhing = true;
+        vrTocuhInputVal = parseInt($rangeInput.value);
+      }
+      function vrTouchMove(e) {
+        if (!vrTocuhing) return;
+        const $target = e.target;
+        // console.log($target, $target !== $imgArea, !$target.closest('.img-area'));
+        // if ($target !== $imgArea && !$target.closest('.img-area')) {
+        //   vrTocuhing = false;
+        //   return;
+        // }
+        let pageX;
+        if (e.type == 'touchmove') {
+          const $touch = e.touches[0];
+          const $targetTouch = e.targetTouches[0];
+          pageX = $targetTouch.pageX;
+          if (vrTocuhElement !== document.elementFromPoint($touch.pageX, $touch.pageY)) {
+            vrTouchEnd();
+          }
+        } else {
+          pageX = e.pageX;
+        }
+        const $stepWidth = $imgArea.offsetWidth / $rangeMax;
+        const $move = pageX - vrTocuhStartPos;
+        const $stepVal = Math.round($move / $stepWidth);
+        const $stepMove = $stepVal % $rangeMax;
+        let $val = vrTocuhInputVal + $stepMove;
+
+        if ($val < $rangeMin) $val = $rangeMin;
+        else if ($val > $rangeMax || $stepVal / $rangeMax > 1) $val = $rangeMax;
+        $rangeInput.value = $val;
+        $rangeInput.dispatchEvent(new Event('input'));
+      }
+      function vrTouchEnd() {
+        vrTocuhing = false;
+      }
+
+      vrReady();
+      $rangeInput.addEventListener('input', rangeChange);
+      $rangeInput.addEventListener('change', rangeChange);
+      $imgArea.addEventListener('touchstart', vrTouchStart);
+      $imgArea.addEventListener('touchmove', vrTouchMove);
+      document.addEventListener('touchend', vrTouchEnd);
+      $imgArea.addEventListener('mousedown', vrTouchStart);
+      $imgArea.addEventListener('mousemove', vrTouchMove);
+      document.addEventListener('mouseup', vrTouchEnd);
+    </script>
+  </body>
+</html>
