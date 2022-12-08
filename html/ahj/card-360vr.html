@@ -60,7 +60,7 @@
           <div class="range-slider disabled">
             <div class="img-area"><img src="../../images/card/000.png" alt="" /></div>
             <div class="range-wrap">
-              <input type="range" min="0" max="98" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
+              <input type="range" min="0" max="98" step="1" value="1" />
               <div class="range"><i></i></div>
               <div class="thumb"></div>
             </div>
@@ -129,8 +129,8 @@
         $imgIdx = $idx;
         $imgFile = $file;
       }
-      function rangeChange(element) {
-        const $el = element;
+      function rangeChange(e) {
+        const $el = e.type === 'range' ? e : e.target;
         const $val = parseInt($el.value);
         const $leftPercent = (100 / ($rangeMax - $rangeMin)) * $val - (100 / ($rangeMax - $rangeMin)) * $rangeMin;
         $rangeThumb.style.left = $leftPercent + '%';
@@ -201,6 +201,8 @@
       }
 
       vrReady();
+      $rangeInput.addEventListener('input', rangeChange);
+      $rangeInput.addEventListener('change', rangeChange);
       $imgArea.addEventListener('touchstart', vrTouchStart);
       $imgArea.addEventListener('touchmove', vrTouchMove);
       document.addEventListener('touchend', vrTouchEnd);
@@ -210,7 +212,6 @@
       document.addEventListener('mouseup', vrTouchEnd);
       $rangeInput.addEventListener('touchstart', stopAutoPlay);
       $rangeInput.addEventListener('mousedown', stopAutoPlay);
-      // document.addEventListener('click', vrTouchEnd);
 
       $(window).on('load', function () {
         $('.loading-icon').remove();

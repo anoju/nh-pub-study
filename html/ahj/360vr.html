@@ -47,7 +47,7 @@
           <div class="range-slider">
             <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
             <div class="range-wrap">
-              <input type="range" min="1" max="61" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
+              <input type="range" min="1" max="61" step="1" value="1" />
               <div class="range"><i></i></div>
               <div class="thumb"></div>
             </div>
@@ -115,8 +115,8 @@
         $imgIdx = $idx;
         $imgFile = $file;
       }
-      function rangeChange(element) {
-        const $el = element;
+      function rangeChange(e) {
+        const $el = e.type === 'range' ? e : e.target;
         const $val = parseInt($el.value);
         const $leftPercent = (100 / ($rangeMax - $rangeMin)) * $val - (100 / ($rangeMax - $rangeMin)) * $rangeMin;
         $rangeThumb.style.left = $leftPercent + '%';
@@ -178,13 +178,14 @@
       }
 
       vrReady();
+      $rangeInput.addEventListener('input', rangeChange);
+      $rangeInput.addEventListener('change', rangeChange);
       $imgArea.addEventListener('touchstart', vrTouchStart);
       $imgArea.addEventListener('touchmove', vrTouchMove);
       document.addEventListener('touchend', vrTouchEnd);
       $imgArea.addEventListener('mousedown', vrTouchStart);
       $imgArea.addEventListener('mousemove', vrTouchMove);
       document.addEventListener('mouseup', vrTouchEnd);
-      // document.addEventListener('click', vrTouchEnd);
     </script>
   </body>
 </html>
