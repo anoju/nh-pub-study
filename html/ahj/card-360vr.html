@@ -11,7 +11,6 @@
         padding-top: 0;
       }
       .range-slider.disabled {
-        opacity: 0.5;
         pointer-events: none;
       }
       .range-slider .img-area {
@@ -37,6 +36,16 @@
       .pre-img-wrap {
         display: none;
       }
+      .loading-icon {
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(2px);
+      }
     </style>
   </head>
   <body>
@@ -55,6 +64,7 @@
               <div class="range"><i></i></div>
               <div class="thumb"></div>
             </div>
+            <div class="loading-icon"></div>
           </div>
           <br />
           <br />
@@ -203,6 +213,7 @@
       // document.addEventListener('click', vrTouchEnd);
 
       $(window).on('load', function () {
+        $('.loading-icon').remove();
         $('.range-slider').removeClass('disabled');
         autoPlay();
       });
