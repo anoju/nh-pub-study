@@ -213,9 +213,9 @@
       $rangeInput.addEventListener('touchstart', stopAutoPlay);
       $rangeInput.addEventListener('mousedown', stopAutoPlay);
 
-      $(window).on('load', function () {
-        $('.loading-icon').remove();
-        $('.range-slider').removeClass('disabled');
+      window.addEventListener('load', (event) => {
+        document.querySelector('.loading-icon').remove();
+        document.querySelector('.range-slider').classList.remove('disabled');
         autoPlay();
       });
     </script>
