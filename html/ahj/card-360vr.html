@@ -167,7 +167,7 @@
           const $targetTouch = e.targetTouches[0];
           pageX = $targetTouch.pageX;
           if (vrTocuhElement !== document.elementFromPoint($touch.pageX, $touch.pageY)) {
-            vrTouchEnd(e);
+            vrTouchEnd();
           }
         } else {
           pageX = e.pageX;
@@ -183,7 +183,7 @@
         $rangeInput.value = $val;
         $rangeInput.dispatchEvent(new Event('input'));
       }
-      function vrTouchEnd(e) {
+      function vrTouchEnd() {
         vrTocuhing = false;
       }
 
