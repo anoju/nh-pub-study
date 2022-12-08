@@ -80,6 +80,7 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
@@ -108,7 +109,7 @@
         return getRenderedSize(true, img.width, img.height, img.naturalWidth, img.naturalHeight, parseInt(pos[0]));
       }
 
-      function insertCart() {
+      function jqInsertCart() {
         const $speed = 500;
         const $ease = 'easeInQuart';
         $('.img__grid .button').click(function () {
@@ -163,7 +164,75 @@
           );
         });
       }
-      insertCart();
+      // jqInsertCart();
+
+      function getOffset(element) {
+        let $elX = 0;
+        let $elY = 0;
+        while (element && !Number.isNaN(element.offsetLeft) && !Number.isNaN(element.offsetTop)) {
+          $elX += element.offsetLeft;
+          $elY += element.offsetTop;
+          element = element.offsetParent;
+        }
+        return { left: $elX, top: $elY };
+      }
+      function jsInsertCart() {
+        const $speed = 500;
+        const $ease = 'easeInQuart';
+        function clickEvt(e) {
+          const $target = e.target;
+          const $li = $target.closest('li');
+          const $img = $li.querySelector('.img-box img');
+          const $imgSrc = $img.src;
+          const $imgW = getImgSizeInfo($img).width;
+          const $imgL = getOffset($img).left + getImgSizeInfo($img).left;
+          const $imgT = getOffset($img).top + getImgSizeInfo($img).top;
+
+          const $cart = document.querySelector('.head-right .button');
+          const $cartW = $cart.offsetWidth;
+          const $cartH = $cart.offsetHeight;
+          const $cartL = getOffset($cart).left;
+          const $cartT = getOffset($cart).top;
+
+          const $clone = document.createElement('img');
+          $clone.src = $imgSrc;
+          // $clone.style.width = $imgW;
+          // $clone.style.left = $imgL - window.pageXOffset;
+          // $clone.style.top = $imgT - window.pageYOffset;
+          $clone.setAttribute('style', 'width: ' + $imgW + 'px; left: ' + ($imgL - window.pageXOffset) + 'px; top: ' + ($imgT - window.pageYOffset) + 'px;');
+          0;
+          $clone.classList.add('img__clone');
+          document.body.appendChild($clone);
+
+          $img.style.opacity = 0;
+          const imgAnime = anime({
+            targets: $img,
+            opacity: 1,
+            duration: $speed * 3,
+            easing: $ease,
+            // direction: 'reverse',
+            complete: () => {
+              $img.style.opacity = '';
+            }
+          });
+          const cloneAnime = anime({
+            targets: $clone,
+            width: 20,
+            left: $cartL - window.pageXOffset + $cartW - 20,
+            top: $cartT - window.pageYOffset,
+            duration: $speed,
+            easing: $ease,
+            complete: () => {
+              $clone.remove();
+            }
+          });
+        }
+        const $btns = document.querySelectorAll('.img__grid .button');
+        $btns.forEach(function (btn) {
+          btn.addEventListener('click', clickEvt);
+        });
+      }
+      jsInsertCart();
     </script>
   </body>
 </html>
