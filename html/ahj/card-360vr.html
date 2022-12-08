@@ -16,6 +16,7 @@
       }
       .range-slider .img-area {
         cursor: move;
+        user-select: none;
       }
       .range-slider .img-area:before {
         content: '';
@@ -135,6 +136,7 @@
       let vrTocuhInputVal;
       let vrTocuhing = false;
       function vrTouchStart(e) {
+        stopAutoPlay();
         if (e.type == 'touchstart') {
           vrTocuhStartPos = e.touches[0].pageX;
         } else {
@@ -172,17 +174,34 @@
         vrTocuhing = false;
       }
 
+      let autoPlayTimer;
+      function autoPlay() {
+        autoPlayTimer = setInterval(function () {
+          const $idx = $imgIdx + 1;
+          $rangeInput.value = $idx;
+          $rangeInput.dispatchEvent(new Event('change'));
+          if ($imgIdx >= $rangeMax) clearInterval(autoPlayTimer);
+        }, 100);
+      }
+      function stopAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
       vrReady();
       $imgArea.addEventListener('touchstart', vrTouchStart);
       $imgArea.addEventListener('touchmove', vrTouchMove);
       document.addEventListener('touchend', vrTouchEnd);
       $imgArea.addEventListener('mousedown', vrTouchStart);
       $imgArea.addEventListener('mousemove', vrTouchMove);
+      $imgArea.addEventListener('mouseleave', vrTouchEnd);
       document.addEventListener('mouseup', vrTouchEnd);
+      $rangeInput.addEventListener('touchstart', stopAutoPlay);
+      $rangeInput.addEventListener('mousedown', stopAutoPlay);
       // document.addEventListener('click', vrTouchEnd);
 
       $(window).on('load', function () {
         $('.range-slider').removeClass('disabled');
+        autoPlay();
       });
     </script>
   </body>
