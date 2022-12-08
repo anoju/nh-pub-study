@@ -160,7 +160,7 @@
       //javascript();
       function jquery() {
         const $btn = $('.img__grid > li button');
-        const $ease = 'easeInOutElastic';
+        const $ease = 'easeInQuart';
         $btn.on('click', function (e) {
           e.preventDefault();
           const $target = e.target;
@@ -171,7 +171,7 @@
           const $basketleft = $basket.offset().left;
           if (!$('button').hasClass('button')) return;
           const $li = $target.closest('li');
-          const $Img = $($li).find('.img-area1 img');
+          const $Img = $($li).find('.img-area1 img').first();
           const $ImgWidth = $Img.width();
           const $ImgHeight = $Img.height();
           const $ImgTop = $Img.offset().top;
