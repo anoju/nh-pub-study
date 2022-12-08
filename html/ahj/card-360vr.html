@@ -44,16 +44,16 @@
       <div class="page-body">
         <div class="section">
           <div class="range-slider">
-            <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
+            <div class="img-area"><img src="../../images/card/000.png" alt="" /></div>
             <div class="range-wrap">
-              <input type="range" min="1" max="61" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
+              <input type="range" min="0" max="98" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
               <div class="range"><i></i></div>
               <div class="thumb"></div>
             </div>
           </div>
           <br />
           <br />
-          <p class="t-center break-all">이미지출처 : <a href="https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro" target="_blank" class="underline">https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro</a></p>
+          <p class="t-center break-all">이미지출처 : <a href="https://card.nonghyup.com/content/html/bridge/zgm/" target="_blank" class="underline">https://card.nonghyup.com/content/html/bridge/zgm/</a></p>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
         $img.src = vrImgSrc($idx);
       }
       function vrImgSrc(index) {
-        let $idx = '' + ($rangeMax - index + 1);
+        let $idx = '' + index;
         if ($idx.length == 1) {
           $idx = '00' + $idx;
         } else if ($idx.length == 2) {
