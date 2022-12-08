@@ -134,11 +134,14 @@
 
       let vrTocuhStartPos;
       let vrTocuhInputVal;
+      let vrTocuhElement;
       let vrTocuhing = false;
       function vrTouchStart(e) {
         stopAutoPlay();
         if (e.type == 'touchstart') {
-          vrTocuhStartPos = e.touches[0].pageX;
+          const $touch = e.touches[0];
+          vrTocuhStartPos = $touch.pageX;
+          vrTocuhElement = document.elementFromPoint($touch.pageX, $touch.pageY);
         } else {
           vrTocuhStartPos = e.pageX;
         }
@@ -148,14 +151,14 @@
       function vrTouchMove(e) {
         if (!vrTocuhing) return;
         const $target = e.target;
-        // console.log($target, $target !== $imgArea, !$target.closest('.img-area'));
-        // if ($target !== $imgArea && !$target.closest('.img-area')) {
-        //   vrTocuhing = false;
-        //   return;
-        // }
         let pageX;
         if (e.type == 'touchmove') {
-          pageX = e.targetTouches[0].pageX;
+          const $touch = e.touches[0];
+          const $targetTouch = e.targetTouches[0];
+          pageX = $targetTouch.pageX;
+          if (vrTocuhElement !== document.elementFromPoint($touch.pageX, $touch.pageY)) {
+            vrTouchEnd(e);
+          }
         } else {
           pageX = e.pageX;
         }
