@@ -47,7 +47,7 @@
           <div class="space"></div>
           <ul class="img__grid">
             <li>
-              <div class="img-area1"><img src="../../images/thumb-temp.jpg" alt="" /></div>
+              <div class="img-area1"><img src="../../images/thumb-temp.jpg" alt="" class="clccl" /></div>
               <p class="t-center mt-5"><button class="button line h24">담기</button></p>
             </li>
             <li>
@@ -110,65 +110,109 @@
     <script type="text/javascript" src="../../js/anime-3.2.1.min.js"></script>
     <script>
       // 스크립트 작성이 여기에
+      function javascript() {
+        const $btn = document.querySelector('.img__grid');
+        $btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const $target = e.target;
+          if (!$target.classList.contains('button')) return;
+          const $cart = document.querySelector('.shopping_basket');
+          const $cartWidth = $cart.clientWidth;
+          const $cartHeight = $cart.clientHeight;
+          const $cartLeft = $cart.getBoundingClientRect().left;
+          const $cartTop = $cart.getBoundingClientRect().top;
+          const $li = $target.closest('li'); //클릭한 부모의 li
+          const $img = $li.querySelector('img'); // 클릭한 부모의 li 이미지
+          const $imgWidth = $img.clientWidth;
+          const $imgHeight = $img.clientHeight;
+          const $imgTop = $img.getBoundingClientRect().top;
+          const $imgLeft = $img.getBoundingClientRect().left;
+          const $clone = $img.cloneNode(true);
+          $clone.classList.add('img__clone');
+          $clone.setAttribute('style', 'width:' + $imgWidth + 'px;left:' + $imgLeft + 'px;top:' + $imgTop + 'px;');
+          $img.style.opacity = 0;
+          $img.parentElement.appendChild($clone);
 
-      // var $scrollY = document.querySelector('html').scrollTop; 앞에서 얼마나
+          const $imgMove = anime({
+            targets: $img,
+            opacity: 1,
+            delay: 500,
+            duration: 500,
+            easing: 'easeInExpo',
+            complete: function () {
+              $img.style.opacity = '';
+            }
+          });
 
-      const $btn = document.querySelector('.img__grid');
-      $btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var $cloneBtn = document.querySelectorAll('.img__grid .button');
-        $cloneBtn.forEach(function (x, a) {
-          var $head = document.querySelector('.page-head').clientHeight;
-          var $space = document.querySelector('.space').clientHeight;
-          var $btn = document.querySelector('.mt-5 button').clientHeight;
-          var $clone = document.getElementsByClassName('img-area1')[a].firstElementChild.cloneNode(true); // 복제
-          var $imgTop = document.querySelectorAll('.img-area1')[a].offsetTop;
-          var $imgLeft = document.querySelectorAll('.img-area1')[a].offsetLeft;
-          var $imgWidth = document.getElementsByClassName('img-area1')[a].firstElementChild.clientWidth;
-          var $imgwHeight = document.getElementsByClassName('img-area1')[a].firstElementChild.clientHeight;
-          var $li = document.getElementsByClassName('img-area1')[a].parentElement.clientHeight;
-          var resizeWidth;
-          var resizeHeight;
-          function ImgMove(i) {
-            var $ImgMove = anime({
-              targets: i,
-              top: 0,
-              right: 0,
-              duration: 1000,
-              easing: 'easeInOutQuad',
-              autoplay: true
-            });
-            $cloneBtn[a].onclick = $ImgMove.restart;
-          }
-          // 이미지 비율 구하기
-          //var basisRatio = $imgWidth / $imgwHeight;
-          //var imgRatio = height / width;
-
-          if (e.target == $cloneBtn[a]) {
-            $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.opacity = '0';
-            var $cloneEl = $cloneBtn[a].parentElement.parentElement.firstElementChild.appendChild($clone); // 복제한 이미지 넣기
-            $cloneEl.classList.add('img__clone');
-            $cloneEl.style.top = $head + $space + $btn + 'px';
-            //$cloneEl.style.left = $imgLeft + 'px';
-            console.log($li, 'li  clientHeight');
-            console.log($imgTop, 'img-area1 oftop');
-            console.log($imgLeft, 'img-area1 ofleft');
-            console.log($head, 'head');
-            console.log($space, 'space');
-            console.log(window.scrollY, 'window.scrollY');
-            console.log($cloneBtn[a].parentElement.parentElement.firstElementChild.offsetTop, '$cloneEl');
-
-            $cloneEl.style.width = $imgWidth + 'px';
-            $cloneEl.style.height = $imgwHeight + 'px';
-            ImgMove($cloneEl);
-
-            setTimeout(function () {
-              $cloneBtn[a].parentElement.parentElement.firstElementChild.firstChild.style.cssText = 'opacity:1';
-              $cloneBtn[a].parentElement.parentElement.firstElementChild.removeChild($cloneEl); //복제한 이미지 사라짐
-            }, 1000);
-          }
+          const $cloneMove = anime({
+            targets: $clone,
+            width: 0,
+            left: $cartLeft + $cartWidth / 2,
+            top: $cartTop + $cartHeight / 2,
+            duration: 800,
+            easing: 'easeInExpo',
+            complete: function () {
+              $clone.remove();
+            }
+          });
         });
-      });
+      }
+      //javascript();
+      function jquery() {
+        const $btn = $('.img__grid > li button');
+        const $ease = 'easeInOutElastic';
+        $btn.on('click', function (e) {
+          e.preventDefault();
+          const $target = e.target;
+          const $basket = $('.shopping_basket');
+          const $basketWidth = $basket.width();
+          const $basketHeight = $basket.height();
+          const $basketTop = $basket.position().top;
+          const $basketleft = $basket.offset().left;
+          if (!$('button').hasClass('button')) return;
+          const $li = $target.closest('li');
+          const $Img = $($li).find('.img-area1 img');
+          const $ImgWidth = $Img.width();
+          const $ImgHeight = $Img.height();
+          const $ImgTop = $Img.offset().top;
+          const $Imgleft = $Img.offset().left;
+          const $ImgT = $(window).scrollTop();
+          const $ImgL = $(window).scrollLeft();
+          const $Topsum = $ImgTop - $ImgT;
+          const $Leftsum = $Imgleft - $ImgL;
+          const $clone = $($Img).clone().appendTo($($li).find('.img-area1')).addClass('img__clone');
+          /* $clone.attr('style', 'width:' + $ImgWidth + 'px;left:' + $Leftsum + 'px;top:' + $Topsum + 'px'); */
+          $clone.css({
+            width: $ImgWidth,
+            top: $Topsum,
+            left: $Leftsum
+          });
+          $Img.css('opacity', '0').animate(
+            {
+              opacity: 1
+            },
+            800,
+            'swing'
+          );
+          $clone.animate(
+            {
+              width: 20,
+              left: $basketleft + $basketWidth / 2,
+              top: $basketTop + $basketHeight / 2
+            },
+            800,
+            $ease,
+            function () {
+              $(this).remove();
+            }
+          );
+        });
+      }
+      jquery();
+      // Element.getBoundingClientRect() 메서드는 엘리먼트의 크기와 뷰포트에 상대적인 위치 정보를 제공하는 DOMRect 객체를 반환합니다.
+      // offsetWidth, offsetHeight 일반적으로 엘리먼트의 전체 크기를 알고 싶다면, `offsetWidth`와 `offsetHeight` 속성을 가져오면 된다.
+      // 이 속성은 엘리먼트의 패딩과 보더, 스크롤바의 사이즈를 포함한 값을 리턴한다.
+      // clientWidth, clientHeight이 속성은 보더와 스크롤바의 크기를 제외한 실제 컨텐츠의 크기를 리턴한다. (패딩은 포함하고 있다)
     </script>
   </body>
 </html>
