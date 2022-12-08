@@ -10,6 +10,10 @@
       .range-slider {
         padding-top: 0;
       }
+      .range-slider.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
       .range-slider .img-area {
         cursor: move;
       }
@@ -43,7 +47,7 @@
       </div>
       <div class="page-body">
         <div class="section">
-          <div class="range-slider">
+          <div class="range-slider disabled">
             <div class="img-area"><img src="../../images/card/000.png" alt="" /></div>
             <div class="range-wrap">
               <input type="range" min="0" max="98" step="1" value="1" oninput="rangeChange(this)" onchange="rangeChange(this)" />
@@ -176,6 +180,10 @@
       $imgArea.addEventListener('mousemove', vrTouchMove);
       document.addEventListener('mouseup', vrTouchEnd);
       // document.addEventListener('click', vrTouchEnd);
+
+      $(window).on('load', function () {
+        $('.range-slider').removeClass('disabled');
+      });
     </script>
   </body>
 </html>
