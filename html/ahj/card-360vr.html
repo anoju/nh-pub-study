@@ -59,10 +59,15 @@
         <div class="section">
           <div class="range-slider disabled">
             <div class="img-area"><img src="../../images/card/000.png" alt="" /></div>
-            <div class="range-wrap">
-              <input type="range" min="0" max="98" step="1" value="1" />
-              <div class="range"><i></i></div>
-              <div class="thumb"></div>
+            <div class="flex not-full align-center">
+              <button class="swiper-auto-ctl"></button>
+              <div class="flex-11">
+                <div class="range-wrap">
+                  <input type="range" min="0" max="98" step="1" value="1" />
+                  <div class="range"><i></i></div>
+                  <div class="thumb"></div>
+                </div>
+              </div>
             </div>
             <div class="loading-icon"></div>
           </div>
@@ -88,6 +93,7 @@
       const $rangeThumb = document.querySelector('.range-slider .thumb');
       const $rangeMin = parseInt($rangeInput.min);
       const $rangeMax = parseInt($rangeInput.max);
+      const $palyBtn = document.querySelector('.swiper-auto-ctl');
 
       function vrImgChange(imgIdx) {
         let $idx = imgIdx;
@@ -189,15 +195,33 @@
 
       let autoPlayTimer;
       function autoPlay() {
+        $palyBtn.classList.remove('play');
         autoPlayTimer = setInterval(function () {
           const $idx = $imgIdx + 1;
           $rangeInput.value = $idx;
           $rangeInput.dispatchEvent(new Event('change'));
-          if ($imgIdx >= $rangeMax) clearInterval(autoPlayTimer);
+          if ($imgIdx >= $rangeMax) {
+            $rangeInput.value = $rangeMin;
+            $rangeInput.dispatchEvent(new Event('change'));
+            stopAutoPlay();
+          }
         }, 100);
       }
       function stopAutoPlay() {
         if (autoPlayTimer) clearInterval(autoPlayTimer);
+        $palyBtn.classList.add('play');
+      }
+      function playClick() {
+        if ($palyBtn.classList.contains('play')) {
+          autoPlay();
+        } else {
+          stopAutoPlay();
+        }
+      }
+      function loadEvt() {
+        document.querySelector('.loading-icon').remove();
+        document.querySelector('.range-slider').classList.remove('disabled');
+        autoPlay();
       }
 
       vrReady();
@@ -212,12 +236,8 @@
       document.addEventListener('mouseup', vrTouchEnd);
       $rangeInput.addEventListener('touchstart', stopAutoPlay);
       $rangeInput.addEventListener('mousedown', stopAutoPlay);
-
-      window.addEventListener('load', (event) => {
-        document.querySelector('.loading-icon').remove();
-        document.querySelector('.range-slider').classList.remove('disabled');
-        autoPlay();
-      });
+      $palyBtn.addEventListener('click', playClick);
+      window.addEventListener('load', loadEvt);
     </script>
   </body>
 </html>
