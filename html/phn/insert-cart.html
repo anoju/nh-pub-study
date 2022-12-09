@@ -32,7 +32,7 @@
         <div>
           <h1>장바구니 담기 효과</h1>
           <div class="head-right">
-            <button class="button">장바구니</button>
+            <button class="button" id="cart">장바구니</button>
           </div>
         </div>
       </div>
@@ -85,10 +85,47 @@
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱s
       $('.t-center .button').on('click', function () {
         const IMGAREA = $(this).parents('li').children('.img-area');
-        const IMG = $(this).parents('li').children('.img-area').children('img');
-        $(IMG).prependTo(IMGAREA);
+        const IMG = IMGAREA.children('img');
+        const IMG_w = IMG.innerWidth();
+        const IMG_top = IMG.offset().top - $(window).scrollTop();
+        const IMG_left = IMG.offset().left - $(window).scrollLeft();
+        const $clone = IMG.clone();
+        $clone.addClass('img__clone').css({
+          width: IMG_w,
+          top: IMG_top,
+          left: IMG_left,
+          'z-index': 22
+        });
+        $('body').append($clone);
 
-        console.log(IMG);
+        const cart = $('#cart');
+        const $TOP = cart.offset().top + cart.outerHeight() / 2 - $(window).scrollTop();
+        const $LEFT = cart.offset().left + cart.outerWidth() / 2 - $(window).scrollLeft();
+        console.log(cart.offset().top, cart.offset().left);
+        $clone.animate(
+          {
+            top: $TOP,
+            left: $LEFT,
+            width: 0
+          },
+          1000,
+          'easeInQuart',
+          function () {
+            $clone.remove();
+          }
+        );
+        IMG.css('opacity', 0)
+          .delay(1000)
+          .animate(
+            {
+              opacity: 1
+            },
+            500,
+            function () {
+              //IMG.css('opacity', '');
+              //IMG.removeAttr('style');
+            }
+          );
       });
     </script>
   </body>
