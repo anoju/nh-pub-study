@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <style>
+      .range-slider .thumb {
+        display: none;
+        transition-duration: 0.1s;
+      }
+      .range-slider input[type='range'] {
+        opacity: 1;
+        background: none;
+      }
+      .range-slider input[type='range'] {
+        opacity: 1;
+        background: none;
+      }
+      .range-slider input[type='range']::-ms-thumb {
+        border-radius: 50%;
+      }
+      .range-slider input[type='range']::-moz-range-thumb {
+        border-radius: 50%;
+      }
+      .range-slider input[type='range']::-webkit-slider-thumb {
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <h1>360 VR</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="section">
+          <!-- 이미지출처 https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro -->
+          <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
+          <!-- 이미지는 001부터 061까지 -->
+          <div class="range-slider">
+            <div class="range-wrap">
+              <div class="range"><i></i></div>
+              <div class="thumb"></div>
+              <input type="range" value="0" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
+    <script>
+      // 스크립트 작성이 여기에
+      // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+    </script>
+  </body>
+</html>

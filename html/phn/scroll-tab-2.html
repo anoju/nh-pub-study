@@ -45,13 +45,13 @@
           <div class="tab-inner">
             <i class="tab-line" aria-hidden="true"></i>
             <ul class="tab-list">
-              <li class="tab"><a href="#">red</a></li>
-              <li class="tab"><a href="#">orange</a></li>
-              <li class="tab"><a href="#">yellow</a></li>
-              <li class="tab"><a href="#">green</a></li>
-              <li class="tab"><a href="#">blue</a></li>
-              <li class="tab"><a href="#">darkblue</a></li>
-              <li class="tab"><a href="#">purple</a></li>
+              <li class="tab"><a href="#red">red</a></li>
+              <li class="tab"><a href="#orange">orange</a></li>
+              <li class="tab"><a href="#yellow">yellow</a></li>
+              <li class="tab"><a href="#green">green</a></li>
+              <li class="tab"><a href="#blue">blue</a></li>
+              <li class="tab"><a href="#darkblue">darkblue</a></li>
+              <li class="tab"><a href="#purple">purple</a></li>
             </ul>
           </div>
         </div>
@@ -81,6 +81,50 @@
     <script>
       // 스크립트 작성이 여기에
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      function tabScroll() {
+        $('.tab a').on('click', function (e) {
+          e.preventDefault();
+          const $href = $(this).attr('href');
+          const $top = $($href).offset().top - $('.page-head').outerHeight() - $('.tab-line-menu').outerHeight();
+
+          $('html, body').animate({ scrollTop: $top });
+        });
+      }
+      tabScroll();
+
+      function tabLine() {
+        $(window).ready(function () {
+          const WIDTH = $('.tab').innerWidth();
+          let LEFT = $('.tab').offset().left;
+          const PAGE = document.querySelector('.page');
+          const STYLE = window.getComputedStyle(PAGE).getPropertyValue('margin-left');
+          const STYLENum = parseInt(STYLE);
+          const LEFTNum = LEFT - STYLENum;
+
+          $('.tab-line').css('width', WIDTH);
+          $('.tab-line').animate({ left: LEFTNum });
+
+          $('.tab').click(function () {
+            let LEFT = $(this).offset().left;
+            const LEFTNum2 = LEFT - STYLENum;
+            console.log(LEFTNum2);
+
+            $('.tab-line').css('width', WIDTH);
+            $('.tab-line').animate({ left: LEFTNum2 });
+          });
+        });
+      }
+      tabLine();
+
+      function windScroll() {
+        const $doc = $('html, body').scrollTop();
+
+        $('.box').each(function () {
+          const $box = $('.box').offset().top;
+          console.log($box);
+        });
+      }
+      //windScroll();
     </script>
   </body>
 </html>
