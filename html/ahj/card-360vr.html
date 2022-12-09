@@ -10,6 +10,9 @@
       .range-slider {
         padding-top: 0;
       }
+      .range-slider.disabled {
+        pointer-events: none;
+      }
       .range-slider .img-area {
         cursor: move;
         user-select: none;
@@ -33,28 +36,39 @@
       .pre-img-wrap {
         display: none;
       }
+      .loading-icon {
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(2px);
+      }
     </style>
   </head>
   <body>
     <div class="page">
       <div class="page-head">
         <div>
-          <h1>360 VR</h1>
+          <h1>플레이어??</h1>
         </div>
       </div>
       <div class="page-body">
         <div class="section">
-          <div class="range-slider">
-            <div class="img-area"><img src="../../images/360/001.png" alt="" /></div>
+          <div class="range-slider disabled">
+            <div class="img-area"><img src="../../images/card/000.png" alt="" /></div>
             <div class="range-wrap">
-              <input type="range" min="1" max="61" step="1" value="1" />
+              <input type="range" min="0" max="98" step="1" value="1" />
               <div class="range"><i></i></div>
               <div class="thumb"></div>
             </div>
+            <div class="loading-icon"></div>
           </div>
           <br />
           <br />
-          <p class="t-center break-all">이미지출처 : <a href="https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro" target="_blank" class="underline">https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro</a></p>
+          <p class="t-center break-all">이미지출처 : <a href="https://card.nonghyup.com/content/html/bridge/zgm/" target="_blank" class="underline">https://card.nonghyup.com/content/html/bridge/zgm/</a></p>
         </div>
       </div>
     </div>
@@ -84,7 +98,7 @@
         $img.src = vrImgSrc($idx);
       }
       function vrImgSrc(index) {
-        let $idx = '' + ($rangeMax - index + 1);
+        let $idx = '' + index;
         if ($idx.length == 1) {
           $idx = '00' + $idx;
         } else if ($idx.length == 2) {
@@ -133,6 +147,7 @@
       let vrTocuhElement;
       let vrTocuhing = false;
       function vrTouchStart(e) {
+        stopAutoPlay();
         if (e.type == 'touchstart') {
           const $touch = e.touches[0];
           vrTocuhStartPos = $touch.pageX;
@@ -146,11 +161,6 @@
       function vrTouchMove(e) {
         if (!vrTocuhing) return;
         const $target = e.target;
-        // console.log($target, $target !== $imgArea, !$target.closest('.img-area'));
-        // if ($target !== $imgArea && !$target.closest('.img-area')) {
-        //   vrTocuhing = false;
-        //   return;
-        // }
         let pageX;
         if (e.type == 'touchmove') {
           const $touch = e.touches[0];
@@ -177,6 +187,19 @@
         vrTocuhing = false;
       }
 
+      let autoPlayTimer;
+      function autoPlay() {
+        autoPlayTimer = setInterval(function () {
+          const $idx = $imgIdx + 1;
+          $rangeInput.value = $idx;
+          $rangeInput.dispatchEvent(new Event('change'));
+          if ($imgIdx >= $rangeMax) clearInterval(autoPlayTimer);
+        }, 100);
+      }
+      function stopAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
       vrReady();
       $rangeInput.addEventListener('input', rangeChange);
       $rangeInput.addEventListener('change', rangeChange);
@@ -185,7 +208,16 @@
       document.addEventListener('touchend', vrTouchEnd);
       $imgArea.addEventListener('mousedown', vrTouchStart);
       $imgArea.addEventListener('mousemove', vrTouchMove);
+      $imgArea.addEventListener('mouseleave', vrTouchEnd);
       document.addEventListener('mouseup', vrTouchEnd);
+      $rangeInput.addEventListener('touchstart', stopAutoPlay);
+      $rangeInput.addEventListener('mousedown', stopAutoPlay);
+
+      window.addEventListener('load', (event) => {
+        document.querySelector('.loading-icon').remove();
+        document.querySelector('.range-slider').classList.remove('disabled');
+        autoPlay();
+      });
     </script>
   </body>
 </html>
