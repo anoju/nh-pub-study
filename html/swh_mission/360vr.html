@@ -70,7 +70,11 @@
         </div>
       </div>
     </div>
-
+    <div>
+      <div id="one"></div>
+      <div id="two"></div>
+      <div id="three"></div>
+    </div>
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
@@ -80,17 +84,26 @@
         const $log = $('.values');
         const $value = e.target.value;
         const $index = $('.img-area img').eq($value);
-        log.html($value);
+        $log.html($value);
         $index.addClass('on').siblings().removeClass('on');
       }
-      input.on('input', JQupdateValue);
-
+      //$input.on('input', JQupdateValue);
       const $input1 = document.querySelector('input');
       function JavascriptupdateValue(e) {
-        const $log1 = document.querySelector('.values');
         const $value1 = e.target.value;
+        const $log1 = (document.querySelector('.values').innerHTML = $value1); //로그
+        const $Imgparent = document.querySelector('.img-area');
+        const $img = document.querySelectorAll('.img-area img');
+        if (!$img[e.target.value].classList.contains('on')) {
+          $img[e.target.value].classList.add('on');
+          if ($img[e.target.value].nextElementSibling) $img[e.target.value].nextElementSibling.classList.remove('on');
+          if ($img[e.target.value].previousElementSibling) $img[e.target.value].previousElementSibling.classList.remove('on');
+        }
       }
+      $input1.addEventListener('input', JavascriptupdateValue);
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
+      //타겟과 인덱스 숫자가 같다면
+      //그 번호째 인덱스에 add 클래스 on 아니면 지워라
     </script>
   </body>
 </html>
