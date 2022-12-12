@@ -76,33 +76,27 @@
         $log.html($value);
         if ($value <= 9) {
           $('.img-area img').attr('src', `../../images/360/00${61 - e.target.value}.png`);
-          console.log('1', $value);
         } else if ($value <= 100) {
           $('.img-area img').attr('src', `../../images/360/0${61 - e.target.value}.png`);
-          console.log('2', $value);
         } else {
           $('.img-area img').attr('src', `../../images/360/${e.target.value}.png`);
         }
       }
-      $input.on('input', JQupdateValue);
+      //$input.on('input', JQupdateValue);
       const $input1 = document.querySelector('input');
       function JavascriptupdateValue(e) {
-        const $newImg1 = function newImg() {};
-        const $value1 = e.target.value;
+        const $value1 = 61 - e.target.value;
         const $log1 = (document.querySelector('.values').innerHTML = $value1); //로그
-        const $Imgparent = document.querySelector('.img-area');
-        const $img = document.querySelectorAll('.img-area img');
-        const a = `<img src="../../images/360/00${e.target.value}.png" alt="" class="on" />`;
-        const b = `<img src="../../images/360/0${e.target.value}.png" alt="" class="on" />`;
-        if (e.target.value <= 9) {
-          document.querySelector('.img-area').insertAdjacentHTML('beforeend', a);
-          console.log('1');
-        } else if (e.target.value >= 10) {
-          document.querySelector('.img-area').insertAdjacentHTML('beforeend', b);
-          console.log('2');
+        const $img = document.querySelector('.img-area img');
+        if ($value1 <= 9) {
+          $img.setAttribute('src', `../../images/360/00${61 - e.target.value}.png`);
+        } else if ($value1 <= 100) {
+          $img.setAttribute('src', `../../images/360/0${61 - e.target.value}.png`);
+        } else {
+          $img.setAttribute('src', `../../images/360/${e.target.value}.png`);
         }
       }
-      //$input1.addEventListener('input', JavascriptupdateValue);
+      $input1.addEventListener('input', JavascriptupdateValue);
 
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
       //타겟과 인덱스 숫자가 같다면
