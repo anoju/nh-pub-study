@@ -44,7 +44,7 @@
         <div class="section">
           <!-- 이미지출처 https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro -->
           <div class="img-area">
-            <img src="../../images/360/061.png" alt="" />
+            <img src="http://127.0.0.1:5700/images/360/061.png" alt="" />
           </div>
 
           <!-- 이미지는 001부터 061까지 -->
@@ -88,15 +88,27 @@
         const $value1 = 61 - e.target.value;
         const $log1 = (document.querySelector('.values').innerHTML = $value1); //로그
         const $img = document.querySelector('.img-area img');
+        const $imgs = document.querySelectorAll('.img-area img');
         if ($value1 <= 9) {
-          $img.setAttribute('src', `../../images/360/00${61 - e.target.value}.png`);
+          $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/00${61 - e.target.value}.png`);
         } else if ($value1 <= 100) {
-          $img.setAttribute('src', `../../images/360/0${61 - e.target.value}.png`);
+          $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/0${61 - e.target.value}.png`);
         } else {
-          $img.setAttribute('src', `../../images/360/${e.target.value}.png`);
+          $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/${e.target.value}.png`);
         }
       }
-      $input1.addEventListener('input', JavascriptupdateValue);
+      for (let i = 1; i <= 61; i++) {
+        if (i <= 9) {
+          document.querySelector('body').setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360//00${i}.png`);
+          console.log('10이하', i);
+        } else if (i <= 100) {
+          document.querySelector('body').setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360//0${i}.png`);
+          console.log('10이상', i);
+        }
+      }
+      window.onload = function () {
+        $input1.addEventListener('input', JavascriptupdateValue);
+      };
 
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
       //타겟과 인덱스 숫자가 같다면
