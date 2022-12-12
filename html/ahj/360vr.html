@@ -10,6 +10,9 @@
       .range-slider {
         padding-top: 0;
       }
+      .range-slider.disabled {
+        pointer-events: none;
+      }
       .range-slider .img-area {
         cursor: move;
         user-select: none;
@@ -33,6 +36,16 @@
       .pre-img-wrap {
         display: none;
       }
+      .loading-icon {
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(2px);
+      }
     </style>
   </head>
   <body>
@@ -51,6 +64,7 @@
               <div class="range"><i></i></div>
               <div class="thumb"></div>
             </div>
+            <div class="loading-icon"></div>
           </div>
           <br />
           <br />
@@ -176,6 +190,10 @@
       function vrTouchEnd() {
         vrTocuhing = false;
       }
+      function loadEvt() {
+        document.querySelector('.loading-icon').remove();
+        document.querySelector('.range-slider').classList.remove('disabled');
+      }
 
       vrReady();
       $rangeInput.addEventListener('input', rangeChange);
@@ -186,6 +204,7 @@
       $imgArea.addEventListener('mousedown', vrTouchStart);
       $imgArea.addEventListener('mousemove', vrTouchMove);
       document.addEventListener('mouseup', vrTouchEnd);
+      window.addEventListener('load', loadEvt);
     </script>
   </body>
 </html>
