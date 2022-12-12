@@ -28,9 +28,9 @@
       .range-slider input[type='range']::-webkit-slider-thumb {
         border-radius: 50%;
       }
-      /*       .img-area img {
-        transform: scaleX(-1);
-      } */
+      .imgNone {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -64,6 +64,7 @@
       <div id="two"></div>
       <div id="three"></div>
     </div>
+    <div class="imgNone"></div>
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
@@ -91,25 +92,23 @@
         const $imgs = document.querySelectorAll('.img-area img');
         if ($value1 <= 9) {
           $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/00${61 - e.target.value}.png`);
+          console.log('1', $value1);
         } else if ($value1 <= 100) {
           $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/0${61 - e.target.value}.png`);
+          console.log('2', $value1);
         } else {
-          $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/${e.target.value}.png`);
+          $img.setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/${61 - e.target.value}.png`);
         }
       }
       for (let i = 1; i <= 61; i++) {
         if (i <= 9) {
-          document.querySelector('body').setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360//00${i}.png`);
-          console.log('10이하', i);
+          document.querySelector('.imgNone').insertAdjacentHTML('beforeend', `<img src="https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/00${i}.png" alt="" />`);
         } else if (i <= 100) {
-          document.querySelector('body').setAttribute('src', `https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360//0${i}.png`);
-          console.log('10이상', i);
+          document.querySelector('.imgNone').insertAdjacentHTML('beforeend', `<img src="https://raw.githubusercontent.com/anoju/nh-pub-study/main/images/360/0${i}.png" alt="" />`);
         }
       }
-      window.onload = function () {
-        $input1.addEventListener('input', JavascriptupdateValue);
-      };
-
+      window.load = function () {};
+      $input1.addEventListener('input', JavascriptupdateValue);
       // 제이쿼리로 작성가능, 자바스크립트로 작성하면 더 짱짱
       //타겟과 인덱스 숫자가 같다면
       //그 번호째 인덱스에 add 클래스 on 아니면 지워라
