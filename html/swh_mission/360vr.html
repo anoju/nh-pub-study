@@ -28,15 +28,9 @@
       .range-slider input[type='range']::-webkit-slider-thumb {
         border-radius: 50%;
       }
-      .img-area img {
-        display: none;
-      }
-      .img-area img.on {
-        display: block !important;
-      }
-      .img-area img.hide {
-        display: none !important;
-      }
+      /*       .img-area img {
+        transform: scaleX(-1);
+      } */
     </style>
   </head>
   <body>
@@ -50,7 +44,7 @@
         <div class="section">
           <!-- 이미지출처 https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-grandeur/intro -->
           <div class="img-area">
-            <img src="../../images/360/001.png" alt="" class="on" />
+            <img src="../../images/360/061.png" alt="" />
           </div>
 
           <!-- 이미지는 001부터 061까지 -->
@@ -58,7 +52,7 @@
             <div class="range-wrap">
               <div class="range"><i></i></div>
               <div class="thumb"></div>
-              <input type="range" min="0" max="61" step="1" value="0" />
+              <input type="range" min="0" max="60" step="1" value="0" />
             </div>
             <p class="values"></p>
           </div>
@@ -77,19 +71,17 @@
       const $input = $('input');
       function JQupdateValue(e) {
         const $log = $('.values');
-        const $value = e.target.value;
+        const $value = 61 - e.target.value;
         const $index = $('.img-area img').eq($value);
-        const a = `<img src="../../images/360/00${e.target.value}.png" alt="" class="on" />`;
-        const b = `<img src="../../images/360/0${e.target.value}.png" alt="" class="on" />`;
         $log.html($value);
-        if (e.target.value <= 9) {
-          $('.img-area img').siblings().remove();
-          $('.img-area').append(a);
+        if ($value <= 9) {
+          $('.img-area img').attr('src', `../../images/360/00${61 - e.target.value}.png`);
           console.log('1', $value);
-        } else if (e.target.value >= 10) {
-          $('.img-area img').siblings().remove();
-          $('.img-area').append(b);
+        } else if ($value <= 100) {
+          $('.img-area img').attr('src', `../../images/360/0${61 - e.target.value}.png`);
           console.log('2', $value);
+        } else {
+          $('.img-area img').attr('src', `../../images/360/${e.target.value}.png`);
         }
       }
       $input.on('input', JQupdateValue);
