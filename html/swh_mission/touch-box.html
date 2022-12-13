@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>테스트</title>
+    <link href="../../css/front.min.css" rel="stylesheet" />
+    <style>
+      .touch-wrap {
+        position: relative;
+        height: 80vh;
+        border: 3px solid #000;
+      }
+      .touch-wrap .box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #ffff00;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-body">
+        <div class="section">
+          <div class="touch-wrap">
+            <div id="box" class="box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
+    <script>
+      //
+      const $box = document.getElementById('box');
+
+      function JsTouchStart(e) {
+        if (e.type === 'touchstart') console.log(e.type, 'touchstart');
+        $box.style.background = 'red';
+      }
+
+      function JsTouchMove(e) {
+        if (e.type === 'touchmove') console.log(e.type, 'touchmove');
+      }
+
+      function JsTouchEnd(e) {
+        if (e.type === 'touchend') console.log(e.type, 'touchend');
+      }
+
+      $box.addEventListener('touchstart', JsTouchStart);
+      $box.addEventListener('touchmove', JsTouchMove);
+      $box.addEventListener('touchend', JsTouchEnd);
+    </script>
+  </body>
+</html>
