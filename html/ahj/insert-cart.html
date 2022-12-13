@@ -196,10 +196,10 @@
 
           const $clone = document.createElement('img');
           $clone.src = $imgSrc;
-          // $clone.style.width = $imgW;
-          // $clone.style.left = $imgL - window.pageXOffset;
-          // $clone.style.top = $imgT - window.pageYOffset;
-          $clone.setAttribute('style', 'width: ' + $imgW + 'px; left: ' + ($imgL - window.pageXOffset) + 'px; top: ' + ($imgT - window.pageYOffset) + 'px;');
+          $clone.style.width = $imgW + 'px';
+          $clone.style.left = $imgL - window.pageXOffset + 'px';
+          $clone.style.top = $imgT - window.pageYOffset + 'px';
+          // $clone.setAttribute('style', 'width: ' + $imgW + 'px; left: ' + ($imgL - window.pageXOffset) + 'px; top: ' + ($imgT - window.pageYOffset) + 'px;');
           0;
           $clone.classList.add('img__clone');
           document.body.appendChild($clone);
