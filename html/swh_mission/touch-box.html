@@ -36,24 +36,65 @@
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
       //
-      const $box = document.getElementById('box');
+      function JsTouch() {
+        const $wrap = document.querySelector('.touch-wrap');
+        const $box = document.getElementById('box');
+        let tocuhElement;
+        function JsTouchStart(e) {
+          if (e.type === 'touchstart') {
+            $box.style.background = 'red';
+            const $touch = e.touches[0];
+            tocuhElement = document.elementFromPoint($touch.pageX, $touch.pageY);
+            console.log($touch.pageX, 'pageX');
+            console.log($touch.pageY, 'pageY');
+            console.log(tocuhElement, 'tocuhElement');
+          }
+        }
 
-      function JsTouchStart(e) {
-        if (e.type === 'touchstart') console.log(e.type, 'touchstart');
-        $box.style.background = 'red';
+        function boxPosition(X, Y) {
+          const $boxW = $box.offsetWidth;
+          const $boxH = $box.offsetHeight;
+          const $wrapW = $wrap.clientWidth;
+          const $wrapH = $wrap.clientHeight;
+          const $wrapL = $wrap.getBoundingClientRect().left;
+          const $wrapT = $wrap.getBoundingClientRect().top;
+          const $wrapLineW = parseInt(window.getComputedStyle($wrap).getPropertyValue('border-width'));
+          const $maxLeft = $wrapW - $boxW;
+          const $maxTop = $wrapH - $boxH;
+          let $left = X - $wrapL - $wrapLineW - $boxW / 2;
+          if ($left < 0) $left = 0;
+          else if ($left > $maxLeft) $left = $maxLeft;
+          let $top = Y - $wrapT - $wrapLineW - $boxH / 2;
+          if ($top < 0) $top = 0;
+          else if ($top > $maxTop) $top = $maxTop;
+          $box.style.left = $left + 'px';
+          $box.style.top = $top + 'px';
+        }
+
+        function JsTouchMove(e) {
+          let pageX;
+          let pageY;
+          if (e.type === 'touchmove') {
+            const $touch = e.touches[0];
+            pageX = $touch.pageX;
+            pageY = $touch.pageY;
+          }
+          boxPosition(pageX, pageY);
+        }
+
+        function JsTouchEnd(e) {
+          if (e.type === 'touchend') {
+            $box.style.background = 'yellow';
+          }
+        }
+        $box.addEventListener('touchstart', JsTouchStart);
+        $box.addEventListener('touchmove', JsTouchMove);
+        $box.addEventListener('touchend', JsTouchEnd);
       }
-
-      function JsTouchMove(e) {
-        if (e.type === 'touchmove') console.log(e.type, 'touchmove');
-      }
-
-      function JsTouchEnd(e) {
-        if (e.type === 'touchend') console.log(e.type, 'touchend');
-      }
-
-      $box.addEventListener('touchstart', JsTouchStart);
-      $box.addEventListener('touchmove', JsTouchMove);
-      $box.addEventListener('touchend', JsTouchEnd);
+      JsTouch();
+      //elementFromPoint() 개체 에서 사용할 수 있는 메서드 는 지정된 좌표(뷰포트 기준)에서 Document최상위를 반환합니다
+      //Touch.pageX, Touch.pageY는 스크롤 오프셋을 포함하여 뷰포트에 상대적인 터치 포인트의 X / Y 좌표를 반환합니다.
+      //TouchEvent.touches 대상 또는 변경된 상태에 관계없이 표면과 현재 접촉하는 모든 지점을 나타내는 모든 Touch 개체의 TouchList입니다.
     </script>
   </body>
 </html>

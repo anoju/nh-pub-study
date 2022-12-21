@@ -101,15 +101,9 @@
       function Jqtab() {
         $('.tab-ul a').click(function (e) {
           e.preventDefault();
-          //const idx = $(this).closest('.tab').index();
           $(e.target).parent().addClass('active').siblings().removeClass('active');
           const idx = $('.tab').index($(this).closest('.tab'));
-          //console.log(idx + ' //li에 자신의인덱스 바로위//', $(this).closest('.tab').index() + '//자신의 부모li 인덱스');
-          //conttab(idx);
           $('.tab-panel').eq(idx).addClass('active').siblings('.tab-panel').removeClass('active');
-
-          //console.log(idx);
-          $(this).closest('.tabwrap').find('.tab-panel').eq(idx).addClass('active').siblings('.tab-panel').removeClass('active');
         });
       }
       Jqtab();
