@@ -358,6 +358,8 @@
           const $tableEl = $(this);
           if ($tableEl.hasClass('not-js-scope')) return;
           const $th = $tableEl.find('th');
+          if (!$th.length) return;
+
           $th.each(function () {
             const $thEl = $(this);
             if ($thEl.hasClass('not-js-scope')) return;
