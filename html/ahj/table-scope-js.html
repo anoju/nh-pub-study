@@ -338,6 +338,47 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
-    <script></script>
+    <script>
+      function tablScopeJs(wrap) {
+        const $wrap = $(wrap);
+        const $table = $wrap.find('table');
+        if (!$table.length) return;
+
+        function tblGroupChk(type, val) {
+          let rtnVal;
+          if (val > 1) {
+            rtnVal = type + 'group';
+          } else {
+            rtnVal = type;
+          }
+          return rtnVal;
+        }
+
+        $table.each(function () {
+          const $tableEl = $(this);
+          if ($tableEl.hasClass('not-js-scope')) return;
+          const $th = $tableEl.find('th');
+          $th.each(function () {
+            const $thEl = $(this);
+            if ($thEl.hasClass('not-js-scope')) return;
+            const $scope = $thEl.attr('scope');
+            const $colspan = !$thEl.attr('colspan') ? 0 : parseInt($thEl.attr('colspan'));
+            const $rowspan = !$thEl.attr('rowspan') ? 0 : parseInt($thEl.attr('rowspan'));
+            let $setScope;
+            if ($thEl.closest('thead').length) {
+              $setScope = tblGroupChk('col', $colspan);
+            } else {
+              if ($thEl.parent().children().length === $thEl.parent().children('th').length) {
+                $setScope = tblGroupChk('col', $colspan);
+              } else {
+                $setScope = tblGroupChk('row', $rowspan);
+              }
+            }
+            if ($setScope && $scope !== $setScope) $thEl.attr('scope', $setScope);
+          });
+        });
+      }
+      tablScopeJs('.js-scope');
+    </script>
   </body>
 </html>
