@@ -65,7 +65,7 @@
           </div>
           <h1 class="gd__h2">scope속성 js처리</h1>
           <div class="js-scope">
-            <div class="table">
+            <div class="table scope_col">
               <table>
                 <caption>
                   테이블
@@ -138,7 +138,7 @@
               </table>
             </div>
             <br />
-            <div class="table">
+            <div class="table scope_col">
               <table>
                 <caption>
                   테이블
@@ -338,6 +338,30 @@
 
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
-    <script></script>
+    <script>
+      const $th_thead = $('.js-scope .table thead tr th');
+      const $th_tbody = $('.js-scope .table tbody tr th');
+      const $th_tbody_ver = $('.js-scope .table tbody');
+
+      function table_jQ() {
+        switch ($th_thead) {
+          case $th_thead:
+            $th_thead.attr('cospe', 'col');
+          default:
+            switch ($th_tbody) {
+              case $th_tbody:
+                $th_tbody.attr('cospe', 'col');
+              default:
+                switch ($th_tbody_ver) {
+                  case $th_tbody_ver:
+                    $th_tbody_ver.find('tr > td').siblings().attr('cospe', 'row');
+                    $th_tbody_ver.find('tr > td').removeAttr('cospe');
+                }
+            }
+            break;
+        }
+      }
+      table_jQ();
+    </script>
   </body>
 </html>
