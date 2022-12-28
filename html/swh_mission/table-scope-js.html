@@ -340,50 +340,44 @@
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
       const $th_thead = $('.js-scope .table thead tr th');
-      const $th_colgroup = $('.js-scope .table thead tr th[colspan = 2]');
+      const $th_thead_colgroup = $('.js-scope .table thead tr th[colspan = 2]');
       const $th_thead_rowgroup = $('.js-scope .table thead tr th[rowspan = 2]');
       const $th_tbody = $('.js-scope .table tbody tr th');
-      const $th_rowgroup = $('.js-scope .table tbody tr th[rowspan = 2]');
+      const $th_tbody_rowgroup = $('.js-scope .table tbody tr th[rowspan = 2]');
       const $th_tbody_ver = $('.js-scope .table tbody');
+
       function table_jQ() {
         if ($($th_thead)) {
-          if ($($th_colgroup)) {
-            $($th_colgroup).attr('scope', 'colgroup');
-          }
-          if ($($th_thead_rowgroup)) {
-            $($th_thead_rowgroup).attr('scope', 'rowgroup');
-          }
+          $($th_thead_colgroup).attr('scope', 'colgroup');
+          $($th_thead_rowgroup).attr('scope', 'rowgroup');
           $th_thead.attr('cospe', 'col');
-          $($th_colgroup).removeAttr('cospe', 'col');
+          $($th_thead_colgroup).removeAttr('cospe', 'col');
           $($th_thead_rowgroup).removeAttr('cospe', 'col');
         }
-
         if ($th_tbody) {
-          if ($($th_rowgroup)) {
-            $($th_rowgroup).attr('scope', 'rowgroup');
-          }
-          $th_tbody.attr('cospe', 'row');
-          $($th_rowgroup).removeAttr('cospe', 'row');
+          $($th_tbody_rowgroup).attr('scope', 'rowgroup');
+          $th_tbody.attr('cospe', 'col');
+          $th_tbody_ver.find('tr > td').siblings().attr('cospe', 'row');
+          $($th_tbody_rowgroup).removeAttr('cospe', 'row');
         }
-
-        /*         switch ($th_thead) {
-          case $th_thead:
-            $th_thead.attr('cospe', 'col');
-          default:
-            switch ($th_tbody) {
-              case $th_tbody:
-                $th_tbody.attr('cospe', 'col');
-              default:
-                switch ($th_tbody_ver) {
-                  case $th_tbody_ver:
-                    $th_tbody_ver.find('tr > td').siblings().attr('cospe', 'row');
-                    $th_tbody_ver.find('tr > td').removeAttr('cospe');
-                }
-            }
-            break;
-        } */
       }
       table_jQ();
+      /*         switch ($th_thead) {
+                case $th_thead:
+                  $th_thead.attr('cospe', 'col');
+                default:
+                  switch ($th_tbody) {
+                    case $th_tbody:
+                      $th_tbody.attr('cospe', 'col');
+                    default:
+                      switch ($th_tbody_ver) {
+                        case $th_tbody_ver:
+                          $th_tbody_ver.find('tr > td').siblings().attr('cospe', 'row');
+                          $th_tbody_ver.find('tr > td').removeAttr('cospe');
+                      }
+                  }
+                  break;
+              } */
     </script>
   </body>
 </html>
