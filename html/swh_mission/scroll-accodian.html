@@ -231,8 +231,6 @@
               .slideDown(300, function () {
                 let $offsetTop = $(this).closest('li').offset().top;
                 const $liHeight = $(this).closest('li').outerHeight();
-                const $panel = $(this).closest('li').find('.folding-panel').outerHeight();
-                const $windHeight = $(window).height();
                 const $head = $('.page-head').outerHeight();
                 const $menu = $('.tab-fixed').outerHeight();
                 $offsetTop = $offsetTop - $head - $menu;

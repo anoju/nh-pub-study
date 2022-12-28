@@ -12,19 +12,21 @@
         background: #000;
         margin: 20px auto;
       }
-      button {
+      .ssss {
         position: fixed;
       }
     </style>
   </head>
   <body>
-    <button>버튼1</button>
-    <button>버튼2</button>
-    <button>버튼3</button>
-    <button>버튼4</button>
-    <button>버튼5</button>
-    <button>버튼6</button>
-    <button>버튼7</button>
+    <div class="ssss">
+      <button>버튼1</button>
+      <button>버튼2</button>
+      <button>버튼3</button>
+      <button>버튼4</button>
+      <button>버튼5</button>
+      <button>버튼6</button>
+      <button>버튼7</button>
+    </div>
     <div class="son son1">1</div>
     <div class="son son2">2</div>
     <div class="son son3">3</div>
@@ -34,10 +36,9 @@
     <div class="son son7">7</div>
     <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
     <script>
-      var $scrollIntoView = document.querySelector('son7');
       $('button').click(function (e) {
-        //$('html').animate({ scrollTop: 0 }, 'slow');
-        $('.son3').get(0).scrollIntoView(true);
+        var idx = $(this).index();
+        $('.son').eq(idx).get(0).scrollIntoView(true);
       });
 
       //text = '너비:' + $('.son').width() + 'px, 높이:' + $('.son').height() + 'px - 요소의 크기<br/>';
