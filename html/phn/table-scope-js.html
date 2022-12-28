@@ -343,10 +343,9 @@
     <script>
       const $table = $('.gd__h2 + .js-scope .table');
 
-      if ($('th:nth-of-type(1)', $table).next('th')) {
-        $('th', $table).prev('th').attr('scope', 'col');
-        $('th:nth-of-type(1)', $table).nextAll('th').attr('scope', 'col');
-      }
+      $('th', $table).prev('th').attr('scope', 'col');
+      $('th:nth-of-type(1)', $table).nextAll('th').attr('scope', 'col');
+      $('td', $table).prev('th').attr('scope', 'row');
     </script>
   </body>
 </html>
