@@ -339,15 +339,14 @@
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
-      const $th_thead = $('.js-scope .table thead tr th');
-      const $th_tbody = $('.js-scope .table tbody tr th');
-      const $th_tbody_row = $('.js-scope .table tbody tr');
-
       function table_jQ() {
+        const $th_thead = $('.js-scope .table thead tr th');
+        const $th_tbody = $('.js-scope .table tbody tr th');
+        const $th_tbody_row = $('.js-scope .table tbody tr');
+
         $($th_thead).attr('scope', 'col');
         $($th_tbody).attr('scope', 'col');
         $($th_tbody_row).find('td').siblings().not('td').attr('scope', 'row');
-        $('.js-scope .table thead tr th[rowspan = 2]').attr('scope', 'row');
       }
       table_jQ();
     </script>
