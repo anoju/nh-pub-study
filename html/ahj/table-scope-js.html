@@ -339,7 +339,7 @@
                     <th rowspan="2">구분2</th>
                   </tr>
                   <tr>
-                    <th>구분3</th>
+                    <th></th>
                     <th>구분4</th>
                   </tr>
                 </thead>
@@ -392,19 +392,15 @@
 
           $th.each(function () {
             const $thEl = $(this);
-            if ($thEl.hasClass('not-js-scope')) return;
+            if ($thEl.hasClass('not-js-scope') || !$.trim($thEl.text())) return;
             const $scope = $thEl.attr('scope');
             const $colspan = !$thEl.attr('colspan') ? 0 : parseInt($thEl.attr('colspan'));
             const $rowspan = !$thEl.attr('rowspan') ? 0 : parseInt($thEl.attr('rowspan'));
             let $setScope;
-            if ($thEl.closest('thead').length) {
-              $setScope = tblGroupChk('col', $colspan);
+            if ($thEl.next('td').length) {
+              $setScope = tblGroupChk('row', $rowspan);
             } else {
-              if ($thEl.parent().children().length === $thEl.parent().children('th').length) {
-                $setScope = tblGroupChk('col', $colspan);
-              } else {
-                $setScope = tblGroupChk('row', $rowspan);
-              }
+              $setScope = tblGroupChk('col', $colspan);
             }
             if ($setScope && $scope !== $setScope) $thEl.attr('scope', $setScope);
           });
