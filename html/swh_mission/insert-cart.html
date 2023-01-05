@@ -132,8 +132,32 @@
           $clone.setAttribute('style', 'width:' + $imgWidth + 'px;left:' + $imgLeft + 'px;top:' + $imgTop + 'px;');
           $img.style.opacity = 0;
           $img.parentElement.appendChild($clone);
+
+          const $imgMove = anime({
+            targets: $img,
+            opacity: 1,
+            delay: 500,
+            duration: 500,
+            easing: 'easeInExpo',
+            complete: function () {
+              $img.style.opacity = '';
+            }
+          });
+
+          const $cloneMove = anime({
+            targets: $clone,
+            width: 0,
+            left: $cartLeft + $cartWidth / 2,
+            top: $cartTop + $cartHeight / 2,
+            duration: 800,
+            easing: 'easeInExpo',
+            complete: function () {
+              $clone.remove();
+            }
+          });
         });
       }
+
       javascript();
       function jquery() {
         const $btn = $('.img__grid > li button');
