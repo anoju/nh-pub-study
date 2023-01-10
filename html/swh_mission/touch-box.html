@@ -35,7 +35,6 @@
     <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-ui.1.12.1.min.js"></script>
     <script>
-      //
       function JsTouch() {
         const $wrap = document.querySelector('.touch-wrap');
         const $box = document.getElementById('box');
@@ -43,11 +42,8 @@
         function JsTouchStart(e) {
           if (e.type === 'touchstart') {
             $box.style.background = 'red';
-            const $touch = e.touches[0];
-            tocuhElement = document.elementFromPoint($touch.pageX, $touch.pageY);
-            console.log($touch.pageX, 'pageX');
-            console.log($touch.pageY, 'pageY');
-            console.log(tocuhElement, 'tocuhElement');
+            const $touch = e.touches[0]; //표면에 닿는 터치수
+            tocuhElement = document.elementFromPoint($touch.pageX, $touch.pageY); // 표면에 닿는 뷰포트기준 x,y
           }
         }
 
@@ -58,10 +54,10 @@
           const $wrapH = $wrap.clientHeight;
           const $wrapL = $wrap.getBoundingClientRect().left;
           const $wrapT = $wrap.getBoundingClientRect().top;
-          const $wrapLineW = parseInt(window.getComputedStyle($wrap).getPropertyValue('border-width'));
+          const $wrapLineW = parseInt(window.getComputedStyle($wrap).getPropertyValue('border-width')); //인자로 전달받은 요소의 모든 CSS 속성값을 담은 객체를 회신합니다.
           const $maxLeft = $wrapW - $boxW;
           const $maxTop = $wrapH - $boxH;
-          let $left = X - $wrapL - $wrapLineW - $boxW / 2;
+          let $left = X - $wrapL - $wrapLineW - $boxW / 2; // 왜 나누기 2인지 ...? 기준점역할인지? 0과 maxLeft ?
           if ($left < 0) $left = 0;
           else if ($left > $maxLeft) $left = $maxLeft;
           let $top = Y - $wrapT - $wrapLineW - $boxH / 2;
