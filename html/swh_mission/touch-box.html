@@ -55,9 +55,9 @@
           const $wrapL = $wrap.getBoundingClientRect().left;
           const $wrapT = $wrap.getBoundingClientRect().top;
           const $wrapLineW = parseInt(window.getComputedStyle($wrap).getPropertyValue('border-width')); //인자로 전달받은 요소의 모든 CSS 속성값을 담은 객체를 회신합니다.
-          const $maxLeft = $wrapW - $boxW;
-          const $maxTop = $wrapH - $boxH;
-          let $left = X - $wrapL - $wrapLineW - $boxW / 2; // 왜 나누기 2인지 ...? 기준점역할인지? 0과 maxLeft ?
+          const $maxLeft = $wrapW - $boxW; // 해당 값을 빼지않으면 박스크기만큼 더움직인다
+          const $maxTop = $wrapH - $boxH; // 해당 값을 빼지않으면 박스크기만큼 더움직인다
+          let $left = X - $wrapL - $wrapLineW - $boxW / 2; // 2를 나눈이유: 터치했을때 영역이 중간에 잡히게 하기위해 !
           if ($left < 0) $left = 0;
           else if ($left > $maxLeft) $left = $maxLeft;
           let $top = Y - $wrapT - $wrapLineW - $boxH / 2;
