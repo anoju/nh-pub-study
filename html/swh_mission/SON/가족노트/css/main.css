@@ -1,0 +1,31 @@
+/* 공통 */
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+#mainWarp{ position:fixed; top:0; left:0; width:100%; height:100%; background: #bd9958;}
+#maininner{ padding: 20px; transition: .7s;}
+#maininner .main_contBox{display: flex; justify-content: space-between; margin-bottom: 30px; margin-top: 15px;}
+#maininner .main_contBox:first{margin-top: 0;}
+#maininner .main_contBox:last-child{margin-bottom: 0;}
+.main_contBox .main_txt{}
+.main_contBox .main_img{ display: inline-block; width: 200px; }
+.main_contBox .main_img img{width: 100%;}
+
+
+.main_contBox_Type2{ text-align: center;}
+.main_contBox_Type2 .main_img{ display: inline-block;}
+.main_contBox_Type2 .main_txt{margin-top: 15px;}
